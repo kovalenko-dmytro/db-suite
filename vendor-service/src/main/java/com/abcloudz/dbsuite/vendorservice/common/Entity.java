@@ -25,7 +25,8 @@ public enum Entity {
     @Getter
     public enum ConnectionField {
 
-        CONNECTION_GUID("guid");
+        CONNECTION_GUID("connectionGuid"),
+        VENDOR_GUID("vendorGuid");
 
         private final String fieldName;
     }

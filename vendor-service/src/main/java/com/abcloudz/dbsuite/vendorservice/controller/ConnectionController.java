@@ -32,13 +32,14 @@ public class ConnectionController {
     public ResponseEntity<ConnectionResponseDTO> findByGuid(@PathVariable("vendorGuid") String vendorGuid,
                                                             @PathVariable("connectionGuid") String connectionGuid,
                                                             @RequestParam(value = "locale", required = false, defaultValue = "en") Locale locale) {
-        return ResponseEntity.ok().body(connectionService.findByGuid(vendorGuid, connectionGuid, locale));
+        return ResponseEntity.ok().body(connectionService.findByGuid(connectionGuid, locale));
     }
 
     @PostMapping
     public ResponseEntity<ConnectionResponseDTO> create(@PathVariable("vendorGuid") String vendorGuid,
-                                                        @RequestBody @Valid ConnectionCreateRequestDTO request) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(connectionService.create(vendorGuid, request));
+                                                        @RequestBody @Valid ConnectionCreateRequestDTO request,
+                                                        @RequestParam(value = "locale", required = false, defaultValue = "en") Locale locale) {
+        return ResponseEntity.status(HttpStatus.CREATED).body(connectionService.create(vendorGuid, request, locale));
     }
 
     @PutMapping(value = "/{connectionGuid}")
