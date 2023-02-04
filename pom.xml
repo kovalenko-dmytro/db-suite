@@ -11,28 +11,21 @@
 	</parent>
 
 	<groupId>com.abcloudz</groupId>
-	<artifactId>spring-microservices-template</artifactId>
+	<artifactId>db-suite</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-microservices-template</name>
-	<description>Spring Boot microservices template application</description>
+	<name>Database Suite Tool</name>
+	<description>Database Suite Tool microservices application</description>
 	<packaging>pom</packaging>
 
-	<properties>
-		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-		<java.version>11</java.version>
-	</properties>
-
-	<dependencies>
-		<dependency>
-			<groupId>org.springframework.boot</groupId>
-			<artifactId>spring-boot-starter</artifactId>
-		</dependency>
-	</dependencies>
+	<dependencies/>
 
 	<modules>
 		<module>config-service</module>
 		<module>discovery-service</module>
 		<module>gateway-service</module>
+		<module>book-service</module>
+		<module>user-service</module>
+		<module>some-service</module>
 	</modules>
 
 </project>

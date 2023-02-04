@@ -6,20 +6,43 @@
 
 	<parent>
 		<groupId>com.abcloudz</groupId>
-		<artifactId>spring-microservices-template</artifactId>
+		<artifactId>db-suite</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<groupId>com.abcloudz.spring-microservices-template</groupId>
+	<groupId>com.abcloudz.dbsuite</groupId>
 	<artifactId>config-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>config-service</name>
-	<description>Spring Boot microservices template application configuration service</description>
+	<description>Database Suite Tool configuration service</description>
 
 	<properties>
 		<java.version>11</java.version>
+		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<spring-cloud.version>2021.0.4</spring-cloud.version>
 	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-security</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-config-server</artifactId>
+		</dependency>
+
+		<dependency>
+			<groupId>org.springframework.cloud</groupId>
+			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
+		</dependency>
+	</dependencies>
 
 	<dependencyManagement>
 		<dependencies>
@@ -32,18 +55,6 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-
-	<dependencies>
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-config-server</artifactId>
-		</dependency>
-
-		<dependency>
-			<groupId>org.springframework.cloud</groupId>
-			<artifactId>spring-cloud-starter-netflix-eureka-client</artifactId>
-		</dependency>
-	</dependencies>
 
 	<build>
 		<plugins>

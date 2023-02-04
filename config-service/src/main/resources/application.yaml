@@ -3,6 +3,11 @@ spring:
     name: config-service
   profiles:
     active: ${APP_PROFILE}
+  security:
+    user:
+      name: ${CONFIG_SERVER_SECURITY_USERNAME}
+      password: ${CONFIG_SERVER_SECURITY_PASSWORD}
+      roles: ${CONFIG_SERVER_SECURITY_ROLE}
   cloud:
     config:
       server:
@@ -17,7 +22,7 @@ eureka:
     region: default
     registryFetchIntervalSeconds: 20
     serviceUrl:
-      defaultZone: http://${APP_HOST}:${DISCOVERY_SERVER_PORT}/${APP_CONTEXT_PATH}/eureka/
+      defaultZone: http://${DISCOVERY_SERVER_SECURITY_USERNAME}:${DISCOVERY_SERVER_SECURITY_PASSWORD}@${APP_HOST}:${DISCOVERY_SERVER_PORT}/${APP_CONTEXT_PATH}/eureka/
 
 server:
   port: ${CONFIG_SERVER_PORT}

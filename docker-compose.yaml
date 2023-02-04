@@ -1,0 +1,55 @@
+version: '3'
+services:
+
+  redis:
+    container_name: redis
+    image: redis:7.0.5-alpine
+    restart: always
+    ports:
+      - '6379:6379'
+    command: redis-server --save 20 1 --loglevel warning --requirepass admin
+
+  elasticsearch:
+    container_name: elasticsearch
+    image: elasticsearch:7.17.7
+    ports:
+      - "9200:9200"
+      - "9300:9300"
+    environment:
+      ELASTIC_PASSWORD: admin
+      discovery.type: single-node
+
+  zipkin:
+    container_name: zipkin
+    hostname: 127.0.0.1
+    image: openzipkin/zipkin:latest
+    ports:
+      - "9411:9411"
+    environment:
+      STORAGE_TYPE: elasticsearch
+      ES_HOSTS: elasticsearch:9200
+      ES_PASSWORD: admin
+      RABBIT_QUEUE: zipkin
+      RABBIT_ADDRESSES: rabbitmq:5672
+      RABBIT_PASSWORD: admin
+      RABBIT_USER: admin
+    depends_on:
+      elasticsearch:
+        condition: service_started
+      rabbitmq:
+        condition: service_healthy
+
+  rabbitmq:
+    container_name: rabbitmq
+    image: rabbitmq:3.8-management-alpine
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: admin
+      RABBITMQ_DEFAULT_PASS: admin
+    healthcheck:
+      test: [ "CMD", "rabbitmqctl", "status" ]
+      interval: 10s
+      timeout: 5s
+      retries: 10

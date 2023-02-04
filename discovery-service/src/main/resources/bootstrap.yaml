@@ -6,4 +6,6 @@ spring:
       name: discovery-service
       label: ${CONFIG_SERVER_GIT_URI_BRANCH}
       profile: ${APP_PROFILE}
+      username: ${CONFIG_SERVER_SECURITY_USERNAME}
+      password: ${CONFIG_SERVER_SECURITY_PASSWORD}
       uri: http://${APP_HOST}:${CONFIG_SERVER_PORT}/${APP_CONTEXT_PATH}
