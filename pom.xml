@@ -11,10 +11,10 @@
 	</parent>
 
 	<groupId>com.abcloudz</groupId>
-	<artifactId>spring-microservices-template</artifactId>
+	<artifactId>db-suite</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>spring-microservices-template</name>
-	<description>Spring Boot microservices template application</description>
+	<name>Database Suite Tool</name>
+	<description>Database Suite Tool microservices application</description>
 	<packaging>pom</packaging>
 
 	<dependencies/>

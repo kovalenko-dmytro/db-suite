@@ -6,15 +6,15 @@
 
 	<parent>
 		<groupId>com.abcloudz</groupId>
-		<artifactId>spring-microservices-template</artifactId>
+		<artifactId>db-suite</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<groupId>com.abcloudz.spring-microservices-template</groupId>
+	<groupId>com.abcloudz.dbsuite</groupId>
 	<artifactId>config-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>config-service</name>
-	<description>Spring Boot microservices template application configuration service</description>
+	<description>Database Suite Tool configuration service</description>
 
 	<properties>
 		<java.version>11</java.version>

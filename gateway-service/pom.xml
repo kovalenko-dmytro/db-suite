@@ -6,15 +6,15 @@
 
 	<parent>
 		<groupId>com.abcloudz</groupId>
-		<artifactId>spring-microservices-template</artifactId>
+		<artifactId>db-suite</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<groupId>com.abcloudz.springmicroservicestemplate</groupId>
+	<groupId>com.abcloudz.dbsuite</groupId>
 	<artifactId>gateway-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>gateway-service</name>
-	<description>Spring Boot microservices template gateway service</description>
+	<description>Database Suite Tool gateway service</description>
 
 	<properties>
 		<java.version>11</java.version>
