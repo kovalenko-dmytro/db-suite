@@ -8,7 +8,8 @@ import lombok.Getter;
 public enum CommonConstant {
 
     MESSAGE_SOURCE_PATH("classpath:messages/messages"),
-    COLON(":");
+    COLON(":"),
+    DOT(".");
 
     private final String value;
 }

@@ -7,7 +7,8 @@ import lombok.Getter;
 @Getter
 public enum Entity {
 
-    VENDOR("Vendor");
+    VENDOR("Vendor"),
+    CONNECTION("Connection");
 
     private final String name;
 
@@ -16,6 +17,15 @@ public enum Entity {
     public enum VendorField {
 
         VENDOR_GUID("guid");
+
+        private final String fieldName;
+    }
+
+    @AllArgsConstructor
+    @Getter
+    public enum ConnectionField {
+
+        CONNECTION_GUID("guid");
 
         private final String fieldName;
     }
