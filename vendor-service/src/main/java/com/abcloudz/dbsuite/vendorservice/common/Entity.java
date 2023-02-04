@@ -1,4 +1,4 @@
-package com.abcloudz.dbsuite.userservice.common;
+package com.abcloudz.dbsuite.vendorservice.common;
 
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -7,16 +7,15 @@ import lombok.Getter;
 @Getter
 public enum Entity {
 
-    USER("User");
+    VENDOR("Vendor");
 
     private final String name;
 
     @AllArgsConstructor
     @Getter
-    public enum UserField {
+    public enum VendorField {
 
-        USER_GUID("guid"),
-        USER_NAME("userName");
+        VENDOR_GUID("guid");
 
         private final String fieldName;
     }
