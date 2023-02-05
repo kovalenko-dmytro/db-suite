@@ -13,7 +13,7 @@ import java.sql.SQLException;
 import java.text.MessageFormat;
 import java.util.Objects;
 
-@Component
+@Component("RDBMSConnectionVerifier")
 public class RDBMSConnectionVerifier implements ConnectionVerifier {
 
     private static final String URL_FORMAT = "jdbc:{0}://{1}:{2}/{3}?verifyServerCertificate={4}&useSSL={5}&requireSSL={6}";

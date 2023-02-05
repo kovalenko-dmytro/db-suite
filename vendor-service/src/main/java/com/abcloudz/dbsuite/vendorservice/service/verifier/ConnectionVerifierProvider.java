@@ -35,9 +35,9 @@ public class ConnectionVerifierProvider {
 
     @PostConstruct
     private void init() {
-        connectionVerifiers.put(VendorType.POSTGRESQL, getBeanByName("rDBMSConnectionVerifier"));
-        connectionVerifiers.put(VendorType.MYSQL, getBeanByName("rDBMSConnectionVerifier"));
-        connectionVerifiers.put(VendorType.MONGO_DB, getBeanByName("mongoDBConnectionVerifier"));
+        connectionVerifiers.put(VendorType.POSTGRESQL, getBeanByName("RDBMSConnectionVerifier"));
+        connectionVerifiers.put(VendorType.MYSQL, getBeanByName("RDBMSConnectionVerifier"));
+        connectionVerifiers.put(VendorType.MONGO_DB, getBeanByName("MongoDBConnectionVerifier"));
     }
 
     private ConnectionVerifier getBeanByName(String beanName) {
