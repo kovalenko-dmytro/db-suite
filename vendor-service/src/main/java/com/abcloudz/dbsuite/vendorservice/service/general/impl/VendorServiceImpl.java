@@ -1,4 +1,4 @@
-package com.abcloudz.dbsuite.vendorservice.service.impl;
+package com.abcloudz.dbsuite.vendorservice.service.general.impl;
 
 import com.abcloudz.dbsuite.vendorservice.common.Entity;
 import com.abcloudz.dbsuite.vendorservice.common.message.Error;
@@ -6,7 +6,7 @@ import com.abcloudz.dbsuite.vendorservice.dto.vendor.VendorResponseDTO;
 import com.abcloudz.dbsuite.vendorservice.exception.EntityNotFoundException;
 import com.abcloudz.dbsuite.vendorservice.model.vendor.Vendor;
 import com.abcloudz.dbsuite.vendorservice.repository.VendorRepository;
-import com.abcloudz.dbsuite.vendorservice.service.VendorService;
+import com.abcloudz.dbsuite.vendorservice.service.general.VendorService;
 import com.abcloudz.dbsuite.vendorservice.util.mapper.VendorMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;

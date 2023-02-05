@@ -7,7 +7,9 @@ import lombok.Getter;
 @Getter
 public enum VendorType {
 
-    POSTGRESQL("PostgreSql");
+    POSTGRESQL("PostgreSql"),
+    MYSQL("MySql"),
+    MONGO_DB("MongoDB");
 
     private final String vendorType;
 }

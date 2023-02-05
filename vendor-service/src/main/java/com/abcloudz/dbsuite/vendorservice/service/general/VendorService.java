@@ -1,4 +1,4 @@
-package com.abcloudz.dbsuite.vendorservice.service;
+package com.abcloudz.dbsuite.vendorservice.service.general;
 
 import com.abcloudz.dbsuite.vendorservice.dto.vendor.VendorResponseDTO;
 import org.springframework.data.domain.Page;

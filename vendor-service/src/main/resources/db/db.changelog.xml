@@ -18,4 +18,8 @@
         <sqlFile path="db/sql/2023-02-04-2222_insert_table_vendor.sql"/>
     </changeSet>
 
+    <changeSet id="db-change-set-4" author="db-suite">
+        <sqlFile path="db/sql/2023-02-05-0000_create_table_connection.sql"/>
+    </changeSet>
+
 </databaseChangeLog>

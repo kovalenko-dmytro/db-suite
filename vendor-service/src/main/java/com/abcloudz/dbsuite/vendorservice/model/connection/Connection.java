@@ -8,9 +8,10 @@ import lombok.NoArgsConstructor;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
+import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "connection")
+@Table(name = "db_connection")
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -23,7 +24,7 @@ public class Connection {
     @Column(name = "connection_", columnDefinition = "bpchar", unique = true, nullable = false)
     private String connectionGuid;
 
-    @OneToOne(fetch = FetchType.EAGER)
+    @OneToOne
     @JoinColumn(name = "vendor_", nullable = false)
     private Vendor vendor;
 
@@ -54,9 +55,9 @@ public class Connection {
     @Column(name = "require_ssl", nullable = false)
     private Boolean requireSSL;
 
-    @Column(name = "server_version")
-    private Version serverVersion;
-
     @Column(name = "verified", nullable = false)
     private Boolean verified;
+
+    @Column(name = "added_at", nullable = false)
+    private LocalDateTime addedAt;
 }

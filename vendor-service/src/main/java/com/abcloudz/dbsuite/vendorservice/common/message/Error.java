@@ -15,7 +15,9 @@ public enum Error {
     HTTP_METHOD_NOT_ALLOWED("error.http.method.not.allowed"),
     MEDIA_TYPE_NOT_SUPPORTED("error.media.type.not.supported"),
     INTERNAL_SERVER_ERROR_OCCURRED("error.internal.server.error.occurred"),
-    LOG_CONTROLLER_EXECUTE("error.log.controller.execute");
+    LOG_CONTROLLER_EXECUTE("error.log.controller.execute"),
+    VENDOR_UNSUPPORTED("error.vendor.unsupported"),
+    VENDOR_CONNECTION_UNVERIFIED("error.vendor.connection.unverified");
 
     private final String key;
 }

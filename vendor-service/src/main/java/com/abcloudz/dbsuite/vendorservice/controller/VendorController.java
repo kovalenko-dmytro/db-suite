@@ -1,7 +1,7 @@
 package com.abcloudz.dbsuite.vendorservice.controller;
 
 import com.abcloudz.dbsuite.vendorservice.dto.vendor.VendorResponseDTO;
-import com.abcloudz.dbsuite.vendorservice.service.VendorService;
+import com.abcloudz.dbsuite.vendorservice.service.general.VendorService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;

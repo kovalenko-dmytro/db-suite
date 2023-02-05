@@ -3,7 +3,8 @@ package com.abcloudz.dbsuite.vendorservice.controller;
 import com.abcloudz.dbsuite.vendorservice.dto.connection.ConnectionCreateRequestDTO;
 import com.abcloudz.dbsuite.vendorservice.dto.connection.ConnectionResponseDTO;
 import com.abcloudz.dbsuite.vendorservice.dto.connection.ConnectionUpdateRequestDTO;
-import com.abcloudz.dbsuite.vendorservice.service.ConnectionService;
+import com.abcloudz.dbsuite.vendorservice.dto.connection.ConnectionVerifyResponseDTO;
+import com.abcloudz.dbsuite.vendorservice.service.general.ConnectionService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
@@ -51,11 +52,10 @@ public class ConnectionController {
     }
 
     @GetMapping(value = "/{connectionGuid}/validate")
-    public ResponseEntity<?> validate(@PathVariable("vendorGuid") String vendorGuid,
-                                      @PathVariable("connectionGuid") String connectionGuid,
-                                      @RequestParam(value = "locale", required = false, defaultValue = "en") Locale locale) {
-        connectionService.validate(connectionGuid, locale);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<ConnectionVerifyResponseDTO> validate(@PathVariable("vendorGuid") String vendorGuid,
+                                                                @PathVariable("connectionGuid") String connectionGuid,
+                                                                @RequestParam(value = "locale", required = false, defaultValue = "en") Locale locale) {
+        return ResponseEntity.ok().body(connectionService.validate(connectionGuid, locale));
     }
 
     @DeleteMapping(value = "/{connectionGuid}")

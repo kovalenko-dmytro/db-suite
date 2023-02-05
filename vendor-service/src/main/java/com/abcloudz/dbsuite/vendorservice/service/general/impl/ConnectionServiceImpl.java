@@ -1,16 +1,20 @@
-package com.abcloudz.dbsuite.vendorservice.service.impl;
+package com.abcloudz.dbsuite.vendorservice.service.general.impl;
 
 import com.abcloudz.dbsuite.vendorservice.common.Entity;
 import com.abcloudz.dbsuite.vendorservice.common.message.Error;
 import com.abcloudz.dbsuite.vendorservice.dto.connection.ConnectionCreateRequestDTO;
 import com.abcloudz.dbsuite.vendorservice.dto.connection.ConnectionResponseDTO;
 import com.abcloudz.dbsuite.vendorservice.dto.connection.ConnectionUpdateRequestDTO;
+import com.abcloudz.dbsuite.vendorservice.dto.connection.ConnectionVerifyResponseDTO;
 import com.abcloudz.dbsuite.vendorservice.exception.EntityNotFoundException;
 import com.abcloudz.dbsuite.vendorservice.model.connection.Connection;
 import com.abcloudz.dbsuite.vendorservice.model.vendor.Vendor;
+import com.abcloudz.dbsuite.vendorservice.model.vendor.VendorType;
 import com.abcloudz.dbsuite.vendorservice.repository.ConnectionRepository;
 import com.abcloudz.dbsuite.vendorservice.repository.VendorRepository;
-import com.abcloudz.dbsuite.vendorservice.service.ConnectionService;
+import com.abcloudz.dbsuite.vendorservice.service.general.ConnectionService;
+import com.abcloudz.dbsuite.vendorservice.service.verifier.ConnectionVerifier;
+import com.abcloudz.dbsuite.vendorservice.service.verifier.ConnectionVerifierProvider;
 import com.abcloudz.dbsuite.vendorservice.util.mapper.ConnectionMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
@@ -18,6 +22,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Locale;
 
 @Service
@@ -28,6 +33,7 @@ public class ConnectionServiceImpl implements ConnectionService {
     private final ConnectionRepository connectionRepository;
     private final MessageSource messageSource;
     private final ConnectionMapper connectionMapper;
+    private final ConnectionVerifierProvider connectionVerifierProvider;
 
     @Override
     public Page<ConnectionResponseDTO> find(String vendorGuid, Pageable pageable) {
@@ -56,8 +62,8 @@ public class ConnectionServiceImpl implements ConnectionService {
             .verifyServerCertificate(request.getVerifyServerCertificate())
             .useSSL(request.getUseSSL())
             .requireSSL(request.getRequireSSL())
-            .serverVersion(null)
             .verified(false)
+            .addedAt(LocalDateTime.now())
             .build();
         return connectionMapper.toConnectionResponseDTO(connectionRepository.save(connection));
     }
@@ -78,8 +84,16 @@ public class ConnectionServiceImpl implements ConnectionService {
     }
 
     @Override
-    public void validate(String connectionGuid, Locale locale) {
+    public ConnectionVerifyResponseDTO validate(String connectionGuid, Locale locale) {
+        Connection connection = getConnectionByGuid(connectionGuid, locale);
+        VendorType vendorType = connection.getVendor().getType();
 
+        ConnectionVerifier verifier = connectionVerifierProvider.getConnectionVerifier(vendorType, locale);
+        ConnectionVerifyResponseDTO verifyResponse = verifier.verify(connection);
+        connection.setVerified(verifyResponse.isVerified());
+        connectionRepository.save(connection);
+
+        return verifyResponse;
     }
 
     @Override

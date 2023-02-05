@@ -20,6 +20,5 @@ public class ConnectionResponseDTO {
     private String database;
     private String username;
     private String password;
-    private String serverVersion;
     private boolean verified;
 }
