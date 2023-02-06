@@ -23,7 +23,7 @@ public class Vendor {
     @Column(name = "vendor_", columnDefinition = "bpchar", unique = true, nullable = false)
     private String vendorGuid;
 
-    @Column(name = "type", nullable = false)
+    @Column(name = "type", unique = true, nullable = false)
     private VendorType type;
 
     @Column(name = "display_name", nullable = false)

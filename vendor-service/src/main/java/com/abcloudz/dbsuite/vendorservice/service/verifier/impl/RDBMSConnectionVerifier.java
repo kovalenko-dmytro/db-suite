@@ -1,33 +1,51 @@
 package com.abcloudz.dbsuite.vendorservice.service.verifier.impl;
 
+import com.abcloudz.dbsuite.vendorservice.common.message.Error;
+import com.abcloudz.dbsuite.vendorservice.common.message.Info;
 import com.abcloudz.dbsuite.vendorservice.dto.connection.ConnectionVerifyResponseDTO;
 import com.abcloudz.dbsuite.vendorservice.model.connection.Connection;
 import com.abcloudz.dbsuite.vendorservice.service.verifier.ConnectionVerifier;
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+import lombok.RequiredArgsConstructor;
+import org.springframework.context.MessageSource;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import javax.sql.DataSource;
 import java.sql.SQLException;
 import java.text.MessageFormat;
+import java.util.Locale;
 import java.util.Objects;
 
 @Component("RDBMSConnectionVerifier")
+@RequiredArgsConstructor
 public class RDBMSConnectionVerifier implements ConnectionVerifier {
 
     private static final String URL_FORMAT = "jdbc:{0}://{1}:{2}/{3}?verifyServerCertificate={4}&useSSL={5}&requireSSL={6}";
 
+    private final MessageSource messageSource;
+
     @Override
-    public ConnectionVerifyResponseDTO verify(Connection connection) {
+    public ConnectionVerifyResponseDTO verify(Connection connection, Locale locale) {
         JdbcTemplate jdbcTemplate = new JdbcTemplate(buildDataSource(connection));
         try {
             boolean connectionValid = isConnectionValid(jdbcTemplate);
-            String message = connectionValid ? "Success" : "Check connection parameters";
-            return ConnectionVerifyResponseDTO.builder().verified(connectionValid).message(message).build();
+            return ConnectionVerifyResponseDTO.builder()
+                .verified(connectionValid)
+                .message(getMessage(connection, locale, connectionValid))
+                .build();
         } catch (SQLException e) {
             return ConnectionVerifyResponseDTO.builder().isError(true).message(e.getMessage()).build();
         }
+    }
+
+    private String getMessage(Connection connection, Locale locale, boolean connectionValid) {
+        String connectionName = connection.getConnectionName();
+        String vendorDisplayName = connection.getVendor().getDisplayName();
+        return connectionValid
+            ? messageSource.getMessage(Info.CONNECTION_VERIFIED.getKey(), new Object[]{connectionName}, locale)
+            : messageSource.getMessage(Error.VENDOR_CONNECTION_UNVERIFIED.getKey(), new Object[]{connectionName, vendorDisplayName}, locale);
     }
 
     private DataSource buildDataSource(Connection connection) {

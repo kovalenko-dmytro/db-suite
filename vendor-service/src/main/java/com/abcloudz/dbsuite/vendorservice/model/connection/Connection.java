@@ -11,7 +11,8 @@ import javax.persistence.*;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "db_connection")
+@Table(name = "db_connection",
+       uniqueConstraints = {@UniqueConstraint(columnNames = {"vendor_", "host", "port", "database"})})
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

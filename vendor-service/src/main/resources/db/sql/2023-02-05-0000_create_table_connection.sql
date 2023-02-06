@@ -13,5 +13,6 @@ CREATE TABLE public.db_connection (
     verified                  boolean                             NOT NULL,
     added_at                  timestamp without time zone DEFAULT (now()):: timestamp (0) without time zone NOT NULL,
     CONSTRAINT connection_pkey PRIMARY KEY (connection_),
-    CONSTRAINT vendor_fkey FOREIGN KEY (vendor_) REFERENCES public.vendor (vendor_)
+    CONSTRAINT vendor_fkey FOREIGN KEY (vendor_) REFERENCES public.vendor (vendor_),
+    CONSTRAINT connection_vendor_host_port_database_ukey UNIQUE (vendor_, host, port, database)
 );

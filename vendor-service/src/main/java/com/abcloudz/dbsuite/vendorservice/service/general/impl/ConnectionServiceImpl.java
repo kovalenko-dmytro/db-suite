@@ -89,7 +89,7 @@ public class ConnectionServiceImpl implements ConnectionService {
         VendorType vendorType = connection.getVendor().getType();
 
         ConnectionVerifier verifier = connectionVerifierProvider.getConnectionVerifier(vendorType, locale);
-        ConnectionVerifyResponseDTO verifyResponse = verifier.verify(connection);
+        ConnectionVerifyResponseDTO verifyResponse = verifier.verify(connection, locale);
         connection.setVerified(verifyResponse.isVerified());
         connectionRepository.save(connection);
 
