@@ -1,0 +1,1 @@
+CREATE TYPE vendor_type AS ENUM('PostgreSql', 'MySql', 'MongoDB');
