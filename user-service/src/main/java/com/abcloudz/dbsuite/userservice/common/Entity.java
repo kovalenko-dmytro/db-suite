@@ -15,7 +15,7 @@ public enum Entity {
     @Getter
     public enum UserField {
 
-        USER_ID("id"),
+        USER_GUID("guid"),
         USER_NAME("userName");
 
         private final String fieldName;

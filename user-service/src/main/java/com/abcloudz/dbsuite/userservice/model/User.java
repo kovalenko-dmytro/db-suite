@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -18,10 +19,10 @@ import java.util.Set;
 public class User {
 
     @Id
-    @Column(name = "user_", unique = true, nullable = false)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "user_seqGen")
-    @SequenceGenerator(name = "user_seqGen", sequenceName = "user_user__seq", allocationSize = 1)
-    private Long userId;
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @Column(name = "user_", columnDefinition = "bpchar", unique = true, nullable = false)
+    private String userGuid;
 
     @Column(name = "user_name", unique = true, nullable = false)
     private String userName;

@@ -11,19 +11,15 @@
     </changeSet>
 
     <changeSet id="db-change-set-2" author="db-suite">
-        <sqlFile path="db/sql/2023-02-04-1111_create_table_user.sql"/>
+        <sqlFile path="db/sql/2023-02-04-1111_create_table_vendor.sql"/>
     </changeSet>
 
     <changeSet id="db-change-set-3" author="db-suite">
-        <sqlFile path="db/sql/2023-02-04-2222_create_table_role.sql"/>
+        <sqlFile path="db/sql/2023-02-04-2222_insert_table_vendor.sql"/>
     </changeSet>
 
     <changeSet id="db-change-set-4" author="db-suite">
-        <sqlFile path="db/sql/2023-02-04-3333_create_table_user_role.sql"/>
-    </changeSet>
-
-    <changeSet id="db-change-set-5" author="db-suite">
-        <sqlFile path="db/sql/2023-02-04-4444_insert_table_role.sql"/>
+        <sqlFile path="db/sql/2023-02-05-0000_create_table_connection.sql"/>
     </changeSet>
 
 </databaseChangeLog>
