@@ -26,7 +26,9 @@ public class MetadataCategoryServiceImpl implements MetadataCategoryService {
     @Override
     public MetadataCategoryResponseDTO findRootMetadataCategory(String vendorType, Locale locale) {
         MetadataCategory category = metadataCategoryRepository
-            .findByVendorTypeAndRoot(VendorType.valueOf(vendorType), true)
+            .findByRoot(true).stream()
+            .filter(metadataCategory -> metadataCategory.getVendorType().equals(VendorType.getType(vendorType)))
+            .findFirst()
             .orElseThrow(() ->
                 new EntityNotFoundException(
                     messageSource.getMessage(Error.CATEGORY_ROOT_NOT_FOUND.getKey(), new Object[]{vendorType}, locale)));

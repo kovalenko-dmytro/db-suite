@@ -2,10 +2,12 @@ package com.abcloudz.dbsuite.loaderservice.model.version;
 
 import com.abcloudz.dbsuite.loaderservice.common.CommonConstant;
 import lombok.AllArgsConstructor;
+import lombok.EqualsAndHashCode;
 import lombok.Getter;
 
 @AllArgsConstructor
 @Getter
+@EqualsAndHashCode
 public class Version implements Comparable<Version> {
 
     private int major;

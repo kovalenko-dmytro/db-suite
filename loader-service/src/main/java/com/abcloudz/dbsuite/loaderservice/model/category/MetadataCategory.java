@@ -14,7 +14,7 @@ import java.util.List;
 
 @Entity
 @Table(name = "metadata_category",
-       uniqueConstraints = {@UniqueConstraint(columnNames = {"type", "vendor_type", "parent_"})})
+       uniqueConstraints = {@UniqueConstraint(columnNames = {"type", "vendor", "parent_"})})
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -33,7 +33,7 @@ public class MetadataCategory {
     @Column(name = "root", nullable = false)
     private boolean root;
 
-    @Column(name = "vendor_type", nullable = false)
+    @Column(name = "vendor", nullable = false)
     private VendorType vendorType;
 
     @ManyToOne
@@ -46,6 +46,6 @@ public class MetadataCategory {
     @Column(name = "added_at", nullable = false)
     private LocalDateTime addedAt;
 
-    @OneToMany(mappedBy = "parent", cascade = CascadeType.ALL, orphanRemoval = true)
+    @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<MetadataCategory> subCategories = new ArrayList<>();
 }

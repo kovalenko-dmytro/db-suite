@@ -11,15 +11,27 @@
     </changeSet>
 
     <changeSet id="db-change-set-2" author="db-suite">
-        <sqlFile path="db/sql/2023-02-08-1111_create_type_metadata_category_type.sql"/>
+        <sqlFile path="db/sql/2023-02-08-1111_create_type_vendor_type.sql"/>
     </changeSet>
 
     <changeSet id="db-change-set-3" author="db-suite">
-        <sqlFile path="db/sql/2023-02-08-2222_create_cast_metadata_category_type.sql"/>
+        <sqlFile path="db/sql/2023-02-08-2222_create_type_metadata_category_type.sql"/>
     </changeSet>
 
     <changeSet id="db-change-set-4" author="db-suite">
-        <sqlFile path="db/sql/2023-02-08-3333_create_table_metadata_category.sql"/>
+        <sqlFile path="db/sql/2023-02-08-3333_create_cast_vendor_type.sql"/>
+    </changeSet>
+
+    <changeSet id="db-change-set-5" author="db-suite">
+        <sqlFile path="db/sql/2023-02-08-4444_create_cast_metadata_category_type.sql"/>
+    </changeSet>
+
+    <changeSet id="db-change-set-6" author="db-suite">
+        <sqlFile path="db/sql/2023-02-08-5555_create_table_metadata_category.sql"/>
+    </changeSet>
+
+    <changeSet id="db-change-set-7" author="db-suite">
+        <sqlFile path="db/sql/2023-02-08-6666_insert_table_metadata_category_postgresql.sql"/>
     </changeSet>
 
 </databaseChangeLog>
