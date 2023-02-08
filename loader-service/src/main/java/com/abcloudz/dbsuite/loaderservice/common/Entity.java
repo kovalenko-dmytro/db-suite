@@ -7,7 +7,7 @@ import lombok.Getter;
 @Getter
 public enum Entity {
 
-    CATEGORY("Category");
+    CATEGORY("Metadata category");
 
     private final String name;
 

@@ -1,0 +1,14 @@
+INSERT INTO metadata_category (type, root, vendor_, parent_) VALUES ('Servers', true, 'aff12497-0f83-40db-963c-3e082477b1da', '');
+INSERT INTO metadata_category (type, root, vendor_, parent_) VALUES ('Databases', false, 'aff12497-0f83-40db-963c-3e082477b1da', (SELECT metadata_category_ FROM metadata_category WHERE type = 'Servers'));
+INSERT INTO metadata_category (type, root, vendor_, parent_) VALUES ('Schemas', false, 'aff12497-0f83-40db-963c-3e082477b1da', (SELECT metadata_category_ FROM metadata_category WHERE type = 'Databases'));
+INSERT INTO metadata_category (type, root, vendor_, parent_) VALUES ('Extensions', false, 'aff12497-0f83-40db-963c-3e082477b1da', (SELECT metadata_category_ FROM metadata_category WHERE type = 'Databases'));
+INSERT INTO metadata_category (type, root, vendor_, parent_) VALUES ('Tables', false, 'aff12497-0f83-40db-963c-3e082477b1da', (SELECT metadata_category_ FROM metadata_category WHERE type = 'Schemas'));
+INSERT INTO metadata_category (type, root, vendor_, parent_) VALUES ('Views', false, 'aff12497-0f83-40db-963c-3e082477b1da', (SELECT metadata_category_ FROM metadata_category WHERE type = 'Schemas'));
+INSERT INTO metadata_category (type, root, vendor_, parent_) VALUES ('Materialized views', false, 'aff12497-0f83-40db-963c-3e082477b1da', (SELECT metadata_category_ FROM metadata_category WHERE type = 'Schemas'));
+INSERT INTO metadata_category (type, root, vendor_, parent_) VALUES ('Procedures', false, 'aff12497-0f83-40db-963c-3e082477b1da', (SELECT metadata_category_ FROM metadata_category WHERE type = 'Schemas'));
+INSERT INTO metadata_category (type, root, vendor_, parent_) VALUES ('Functions', false, 'aff12497-0f83-40db-963c-3e082477b1da', (SELECT metadata_category_ FROM metadata_category WHERE type = 'Schemas'));
+INSERT INTO metadata_category (type, root, vendor_, parent_) VALUES ('Aggregate functions', false, 'aff12497-0f83-40db-963c-3e082477b1da', (SELECT metadata_category_ FROM metadata_category WHERE type = 'Schemas'));
+INSERT INTO metadata_category (type, root, vendor_, parent_) VALUES ('Sequences', false, 'aff12497-0f83-40db-963c-3e082477b1da', (SELECT metadata_category_ FROM metadata_category WHERE type = 'Schemas'));
+INSERT INTO metadata_category (type, root, vendor_, parent_) VALUES ('UDT aliases', false, 'aff12497-0f83-40db-963c-3e082477b1da', (SELECT metadata_category_ FROM metadata_category WHERE type = 'Schemas'));
+INSERT INTO metadata_category (type, root, vendor_, parent_) VALUES ('UDT tables', false, 'aff12497-0f83-40db-963c-3e082477b1da', (SELECT metadata_category_ FROM metadata_category WHERE type = 'Schemas'));
+INSERT INTO metadata_category (type, root, vendor_, parent_) VALUES ('UDT enums', false, 'aff12497-0f83-40db-963c-3e082477b1da', (SELECT metadata_category_ FROM metadata_category WHERE type = 'Schemas'));

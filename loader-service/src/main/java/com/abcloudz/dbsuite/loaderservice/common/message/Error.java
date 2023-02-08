@@ -18,7 +18,8 @@ public enum Error {
     SEARCH_CRITERIA_OPERATION_NOT_SUPPORTED("error.search.criteria.operation.not.supported"),
     CONVERSION_FAILED("error.conversion.failed"),
     LOG_CONTROLLER_EXECUTE("error.log.controller.execute"),
-    SIGNUP_FAILED("error.signup.failed");
+    SIGNUP_FAILED("error.signup.failed"),
+    CATEGORY_ROOT_NOT_FOUND("error.category.root.not.found");
 
     private final String key;
 }
