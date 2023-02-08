@@ -13,7 +13,8 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "metadata_category")
+@Table(name = "metadata_category",
+       uniqueConstraints = {@UniqueConstraint(columnNames = {"type", "vendor_type", "parent_"})})
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
@@ -32,8 +33,8 @@ public class MetadataCategory {
     @Column(name = "root", nullable = false)
     private boolean root;
 
-    @Column(name = "vendor_", nullable = false)
-    private String vendorGuid;
+    @Column(name = "vendor_type", nullable = false)
+    private VendorType vendorType;
 
     @ManyToOne
     @JoinColumn(name = "parent_")

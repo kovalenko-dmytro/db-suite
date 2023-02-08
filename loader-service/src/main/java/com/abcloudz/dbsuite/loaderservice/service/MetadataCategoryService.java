@@ -6,6 +6,6 @@ import java.util.Locale;
 
 public interface MetadataCategoryService {
 
-    MetadataCategoryResponseDTO findRootMetadataCategory(String vendorGuid, Locale locale);
+    MetadataCategoryResponseDTO findRootMetadataCategory(String vendorType, Locale locale);
     MetadataCategoryResponseDTO findByMetadataCategoryGuid(String metadataCategoryGuid, Locale locale);
 }

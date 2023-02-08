@@ -17,7 +17,7 @@ public class MetadataCategoryResponseDTO {
     private String metadataCategoryGuid;
     private String type;
     private boolean root;
-    private String vendorGuid;
+    private String vendorType;
     private String parent;
     private String versionFrom;
     private LocalDateTime addedAt;

@@ -1,0 +1,14 @@
+INSERT INTO metadata_category (type, root, vendor_type, parent_) VALUES ('Servers', true, 'PostgreSql', '');
+INSERT INTO metadata_category (type, root, vendor_type, parent_) VALUES ('Databases', false, 'PostgreSql', (SELECT metadata_category_ FROM metadata_category WHERE type = 'Servers'));
+INSERT INTO metadata_category (type, root, vendor_type, parent_) VALUES ('Schemas', false, 'PostgreSql', (SELECT metadata_category_ FROM metadata_category WHERE type = 'Databases'));
+INSERT INTO metadata_category (type, root, vendor_type, parent_) VALUES ('Extensions', false, 'PostgreSql', (SELECT metadata_category_ FROM metadata_category WHERE type = 'Databases'));
+INSERT INTO metadata_category (type, root, vendor_type, parent_) VALUES ('Tables', false, 'PostgreSql', (SELECT metadata_category_ FROM metadata_category WHERE type = 'Schemas'));
+INSERT INTO metadata_category (type, root, vendor_type, parent_) VALUES ('Views', false, 'PostgreSql', (SELECT metadata_category_ FROM metadata_category WHERE type = 'Schemas'));
+INSERT INTO metadata_category (type, root, vendor_type, parent_) VALUES ('Materialized views', false, 'PostgreSql', (SELECT metadata_category_ FROM metadata_category WHERE type = 'Schemas'));
+INSERT INTO metadata_category (type, root, vendor_type, parent_) VALUES ('Procedures', false, 'PostgreSql', (SELECT metadata_category_ FROM metadata_category WHERE type = 'Schemas'));
+INSERT INTO metadata_category (type, root, vendor_type, parent_) VALUES ('Functions', false, 'PostgreSql', (SELECT metadata_category_ FROM metadata_category WHERE type = 'Schemas'));
+INSERT INTO metadata_category (type, root, vendor_type, parent_) VALUES ('Aggregate functions', false, 'PostgreSql', (SELECT metadata_category_ FROM metadata_category WHERE type = 'Schemas'));
+INSERT INTO metadata_category (type, root, vendor_type, parent_) VALUES ('Sequences', false, 'PostgreSql', (SELECT metadata_category_ FROM metadata_category WHERE type = 'Schemas'));
+INSERT INTO metadata_category (type, root, vendor_type, parent_) VALUES ('UDT aliases', false, 'PostgreSql', (SELECT metadata_category_ FROM metadata_category WHERE type = 'Schemas'));
+INSERT INTO metadata_category (type, root, vendor_type, parent_) VALUES ('UDT tables', false, 'PostgreSql', (SELECT metadata_category_ FROM metadata_category WHERE type = 'Schemas'));
+INSERT INTO metadata_category (type, root, vendor_type, parent_) VALUES ('UDT enums', false, 'PostgreSql', (SELECT metadata_category_ FROM metadata_category WHERE type = 'Schemas'));

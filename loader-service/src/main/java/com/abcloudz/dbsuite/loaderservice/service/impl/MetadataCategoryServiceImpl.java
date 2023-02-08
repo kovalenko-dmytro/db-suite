@@ -5,6 +5,7 @@ import com.abcloudz.dbsuite.loaderservice.common.message.Error;
 import com.abcloudz.dbsuite.loaderservice.dto.category.MetadataCategoryResponseDTO;
 import com.abcloudz.dbsuite.loaderservice.exception.EntityNotFoundException;
 import com.abcloudz.dbsuite.loaderservice.model.category.MetadataCategory;
+import com.abcloudz.dbsuite.loaderservice.model.category.VendorType;
 import com.abcloudz.dbsuite.loaderservice.repository.MetadataCategoryRepository;
 import com.abcloudz.dbsuite.loaderservice.service.MetadataCategoryService;
 import com.abcloudz.dbsuite.loaderservice.util.mapper.MetadataCategoryMapper;
@@ -23,12 +24,12 @@ public class MetadataCategoryServiceImpl implements MetadataCategoryService {
     private final MetadataCategoryMapper metadataCategoryMapper;
 
     @Override
-    public MetadataCategoryResponseDTO findRootMetadataCategory(String vendorGuid, Locale locale) {
+    public MetadataCategoryResponseDTO findRootMetadataCategory(String vendorType, Locale locale) {
         MetadataCategory category = metadataCategoryRepository
-            .findByVendorGuidAndRoot(vendorGuid, true)
+            .findByVendorTypeAndRoot(VendorType.valueOf(vendorType), true)
             .orElseThrow(() ->
                 new EntityNotFoundException(
-                    messageSource.getMessage(Error.CATEGORY_ROOT_NOT_FOUND.getKey(), new Object[]{vendorGuid}, locale)));
+                    messageSource.getMessage(Error.CATEGORY_ROOT_NOT_FOUND.getKey(), new Object[]{vendorType}, locale)));
         return metadataCategoryMapper.toMetadataCategoryResponseDTO(category);
     }
 

@@ -18,9 +18,9 @@ public class MetadataCategoryController {
     private final MetadataCategoryService metadataCategoryService;
 
     @GetMapping(value = "/root")
-    public ResponseEntity<MetadataCategoryResponseDTO> findRoot(@RequestParam("vendorGuid") String vendorGuid,
+    public ResponseEntity<MetadataCategoryResponseDTO> findRoot(@RequestParam("vendorType") String vendorType,
                                                                 @RequestParam(value = "locale", required = false, defaultValue = "en") Locale locale) {
-        return ResponseEntity.ok().body(metadataCategoryService.findRootMetadataCategory(vendorGuid, locale));
+        return ResponseEntity.ok().body(metadataCategoryService.findRootMetadataCategory(vendorType, locale));
     }
 
     @GetMapping(value = "/{metadataCategoryGuid}")

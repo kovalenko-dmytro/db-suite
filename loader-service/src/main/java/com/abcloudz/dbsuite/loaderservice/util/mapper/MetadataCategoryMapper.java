@@ -3,6 +3,7 @@ package com.abcloudz.dbsuite.loaderservice.util.mapper;
 import com.abcloudz.dbsuite.loaderservice.dto.category.MetadataCategoryResponseDTO;
 import com.abcloudz.dbsuite.loaderservice.model.category.MetadataCategory;
 import com.abcloudz.dbsuite.loaderservice.model.category.MetadataCategoryType;
+import com.abcloudz.dbsuite.loaderservice.model.category.VendorType;
 import com.abcloudz.dbsuite.loaderservice.model.version.Version;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
@@ -22,5 +23,9 @@ public interface MetadataCategoryMapper {
 
     default String versionToString(Version version) {
         return (Objects.isNull(version)) ? null : version.toString();
+    }
+
+    default String vendorTypeToString(VendorType type) {
+        return (Objects.isNull(type)) ? null : type.getVendorType();
     }
 }
