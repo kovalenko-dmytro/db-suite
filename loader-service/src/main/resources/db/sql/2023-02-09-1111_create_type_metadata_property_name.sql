@@ -1,0 +1,1 @@
+CREATE TYPE metadata_property_name AS ENUM ('name', 'version', 'uuid');

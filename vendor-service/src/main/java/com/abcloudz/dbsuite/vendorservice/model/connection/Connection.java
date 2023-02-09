@@ -25,7 +25,7 @@ public class Connection {
     @Column(name = "connection_", columnDefinition = "bpchar", unique = true, nullable = false)
     private String connectionGuid;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name = "vendor_", nullable = false)
     private Vendor vendor;
 

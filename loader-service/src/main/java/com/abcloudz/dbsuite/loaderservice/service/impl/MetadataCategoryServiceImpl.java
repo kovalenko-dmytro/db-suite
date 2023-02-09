@@ -46,6 +46,6 @@ public class MetadataCategoryServiceImpl implements MetadataCategoryService {
     }
 
     private Object[] params(String guid) {
-        return new Object[]{Entity.CATEGORY.getName(), Entity.CategoryField.CATEGORY_GUID.getFieldName(), guid};
+        return new Object[]{Entity.CATEGORY.getName(), Entity.Field.GUID.getFieldName(), guid};
     }
 }

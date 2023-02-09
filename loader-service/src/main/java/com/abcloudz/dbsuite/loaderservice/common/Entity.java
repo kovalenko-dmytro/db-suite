@@ -7,15 +7,16 @@ import lombok.Getter;
 @Getter
 public enum Entity {
 
-    CATEGORY("Metadata category");
+    CATEGORY("Metadata category"),
+    METADATA("Metadata");
 
     private final String name;
 
     @AllArgsConstructor
     @Getter
-    public enum CategoryField {
+    public enum Field {
 
-        CATEGORY_GUID("guid");
+        GUID("guid");
 
         private final String fieldName;
     }
