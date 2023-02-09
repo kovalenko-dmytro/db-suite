@@ -32,7 +32,7 @@ public class MetadataCategoryServiceImpl implements MetadataCategoryService {
             .orElseThrow(() ->
                 new EntityNotFoundException(
                     messageSource.getMessage(Error.CATEGORY_ROOT_NOT_FOUND.getKey(), new Object[]{vendorType}, locale)));
-        return metadataCategoryMapper.toMetadataCategoryResponseDTO(category);
+        return metadataCategoryMapper.clearSubChildren(metadataCategoryMapper.toMetadataCategoryResponseDTO(category));
     }
 
     @Override
@@ -42,7 +42,7 @@ public class MetadataCategoryServiceImpl implements MetadataCategoryService {
             .orElseThrow(() ->
                 new EntityNotFoundException(
                     messageSource.getMessage(Error.ENTITY_NOT_FOUND.getKey(), params(metadataCategoryGuid), locale)));
-        return metadataCategoryMapper.toMetadataCategoryResponseDTO(category);
+        return metadataCategoryMapper.clearSubChildren(metadataCategoryMapper.toMetadataCategoryResponseDTO(category));
     }
 
     private Object[] params(String guid) {

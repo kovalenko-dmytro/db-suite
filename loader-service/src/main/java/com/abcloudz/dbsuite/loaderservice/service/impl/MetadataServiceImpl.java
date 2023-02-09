@@ -25,7 +25,7 @@ public class MetadataServiceImpl implements MetadataService {
     @Override
     public MetadataResponseDTO findByMetadataGuid(String metadataGuid, Locale locale) {
         Metadata metadata = getMetadataByMetadataGuid(metadataGuid, locale);
-        return metadataMapper.toMetadataResponseDTO(metadata);
+        return metadataMapper.clearSubChildren(metadataMapper.toMetadataResponseDTO(metadata));
     }
 
     @Override

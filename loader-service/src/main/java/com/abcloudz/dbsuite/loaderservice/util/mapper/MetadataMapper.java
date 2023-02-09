@@ -1,5 +1,6 @@
 package com.abcloudz.dbsuite.loaderservice.util.mapper;
 
+import com.abcloudz.dbsuite.loaderservice.dto.category.BaseMetadataCategoryResponseDTO;
 import com.abcloudz.dbsuite.loaderservice.dto.metadata.MetadataPropertyResponseDTO;
 import com.abcloudz.dbsuite.loaderservice.dto.metadata.MetadataResponseDTO;
 import com.abcloudz.dbsuite.loaderservice.model.category.MetadataCategoryType;
@@ -11,7 +12,10 @@ import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface MetadataMapper {
@@ -32,5 +36,17 @@ public interface MetadataMapper {
 
     default String metadataCategoryTypeToString(MetadataCategoryType type) {
         return (Objects.isNull(type)) ? null : type.getType();
+    }
+
+    default MetadataResponseDTO clearSubChildren(MetadataResponseDTO source) {
+        List<MetadataResponseDTO> children = source.getChildren().stream()
+            .peek(metadataResponseDTO -> metadataResponseDTO.setChildren(Collections.emptyList()))
+            .collect(Collectors.toList());
+        List<BaseMetadataCategoryResponseDTO> subCategories = source.getCategory().getSubCategories().stream()
+            .peek(category -> category.setSubCategories(Collections.emptyList()))
+            .collect(Collectors.toList());
+        source.setChildren(children);
+        source.getCategory().setSubCategories(subCategories);
+        return source;
     }
 }

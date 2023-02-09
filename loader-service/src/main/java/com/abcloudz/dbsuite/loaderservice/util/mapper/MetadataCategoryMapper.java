@@ -9,12 +9,15 @@ import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
+import java.util.stream.Collectors;
 
 @Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface MetadataCategoryMapper {
 
-    @Mapping(target="parent", source="parent.metadataCategoryGuid")
+    @Mapping(target = "parent", source = "parent.metadataCategoryGuid")
     MetadataCategoryResponseDTO toMetadataCategoryResponseDTO(MetadataCategory category);
 
     default String metadataCategoryTypeToString(MetadataCategoryType type) {
@@ -27,5 +30,13 @@ public interface MetadataCategoryMapper {
 
     default String vendorTypeToString(VendorType type) {
         return (Objects.isNull(type)) ? null : type.getVendorType();
+    }
+
+    default MetadataCategoryResponseDTO clearSubChildren(MetadataCategoryResponseDTO source) {
+        List<MetadataCategoryResponseDTO> subCategories = source.getSubCategories().stream()
+            .peek(metadataCategoryResponseDTO -> metadataCategoryResponseDTO.setSubCategories(Collections.emptyList()))
+            .collect(Collectors.toList());
+        source.setSubCategories(subCategories);
+        return source;
     }
 }
