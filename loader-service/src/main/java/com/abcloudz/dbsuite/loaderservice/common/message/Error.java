@@ -19,7 +19,8 @@ public enum Error {
     CONVERSION_FAILED("error.conversion.failed"),
     LOG_CONTROLLER_EXECUTE("error.log.controller.execute"),
     SIGNUP_FAILED("error.signup.failed"),
-    CATEGORY_ROOT_NOT_FOUND("error.category.root.not.found");
+    CATEGORY_ROOT_NOT_FOUND("error.category.root.not.found"),
+    LOADER_METADATA_PARENT_NOT_LOADED("loader.metadata.parent.not.loaded");
 
     private final String key;
 }

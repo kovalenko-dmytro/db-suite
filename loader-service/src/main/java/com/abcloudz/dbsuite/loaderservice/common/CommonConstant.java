@@ -9,7 +9,9 @@ public enum CommonConstant {
 
     MESSAGE_SOURCE_PATH("classpath:messages/messages"),
     COLON(":"),
-    DOT(".");
+    DOT("."),
+    EQUAL("="),
+    COMMA(",");
 
     private final String value;
 }

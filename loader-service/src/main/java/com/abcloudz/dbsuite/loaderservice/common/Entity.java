@@ -8,7 +8,8 @@ import lombok.Getter;
 public enum Entity {
 
     CATEGORY("Metadata category"),
-    METADATA("Metadata");
+    METADATA("Metadata"),
+    CONNECTION("Connection");
 
     private final String name;
 

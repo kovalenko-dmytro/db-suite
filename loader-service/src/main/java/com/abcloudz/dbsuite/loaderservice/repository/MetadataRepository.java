@@ -4,6 +4,10 @@ import com.abcloudz.dbsuite.loaderservice.model.metadata.Metadata;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
+import java.util.Optional;
+
 @Repository
 public interface MetadataRepository extends JpaRepository<Metadata, String> {
+
+    Optional<Metadata> findByConnectionGuidAndCategory_metadataCategoryGuid(String connectionGuid, String metadataCategoryGuid);
 }

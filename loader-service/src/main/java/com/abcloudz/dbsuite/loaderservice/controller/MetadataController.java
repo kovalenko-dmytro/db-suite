@@ -4,6 +4,7 @@ import com.abcloudz.dbsuite.loaderservice.dto.metadata.MetadataResponseDTO;
 import com.abcloudz.dbsuite.loaderservice.service.MetadataService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -21,6 +22,16 @@ public class MetadataController {
     public ResponseEntity<MetadataResponseDTO> findByGuid(@PathVariable("metadataGuid") String metadataGuid,
                                                           @RequestParam(value = "locale", required = false, defaultValue = "en") Locale locale) {
         return ResponseEntity.ok().body(metadataService.findByMetadataGuid(metadataGuid, locale));
+    }
+
+    @PostMapping
+    public ResponseEntity<MetadataResponseDTO> load(@RequestParam("vendorGuid") String vendorGuid,
+                                                    @RequestParam("connectionGuid") String connectionGuid,
+                                                    @RequestParam("metadataCategoryGuid") String metadataCategoryGuid,
+                                                    @RequestParam(value = "locale", required = false, defaultValue = "en") Locale locale) {
+        return ResponseEntity
+            .status(HttpStatus.CREATED)
+            .body(metadataService.load(vendorGuid, connectionGuid, metadataCategoryGuid, locale));
     }
 
     @DeleteMapping(value = "/{metadataGuid}")
