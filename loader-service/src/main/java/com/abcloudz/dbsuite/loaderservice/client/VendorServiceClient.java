@@ -9,7 +9,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import java.util.Locale;
 
 
-@FeignClient(name = "vendor-service", url = "localhost:8080/db-suite/vendor-service")
+@FeignClient(name = "vendor-service", url = "${client.vendor-service.base-uri}")
 public interface VendorServiceClient {
 
     @GetMapping(value = "/api/v1/vendors/{vendorGuid}/connections/{connectionGuid}")

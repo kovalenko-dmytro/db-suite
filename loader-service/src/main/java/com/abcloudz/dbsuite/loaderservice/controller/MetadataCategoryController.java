@@ -1,7 +1,7 @@
 package com.abcloudz.dbsuite.loaderservice.controller;
 
 import com.abcloudz.dbsuite.loaderservice.dto.category.MetadataCategoryResponseDTO;
-import com.abcloudz.dbsuite.loaderservice.service.MetadataCategoryService;
+import com.abcloudz.dbsuite.loaderservice.service.category.MetadataCategoryService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;

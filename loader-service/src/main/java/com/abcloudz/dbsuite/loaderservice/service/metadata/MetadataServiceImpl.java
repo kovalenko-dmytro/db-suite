@@ -1,25 +1,26 @@
-package com.abcloudz.dbsuite.loaderservice.service.impl;
+package com.abcloudz.dbsuite.loaderservice.service.metadata;
 
 import com.abcloudz.dbsuite.loaderservice.client.VendorServiceClient;
 import com.abcloudz.dbsuite.loaderservice.common.Entity;
 import com.abcloudz.dbsuite.loaderservice.common.message.Error;
-import com.abcloudz.dbsuite.loaderservice.dto.category.BaseMetadataCategoryResponseDTO;
-import com.abcloudz.dbsuite.loaderservice.dto.category.MetadataCategoryResponseDTO;
 import com.abcloudz.dbsuite.loaderservice.dto.connection.ConnectionResponseDTO;
 import com.abcloudz.dbsuite.loaderservice.dto.metadata.MetadataResponseDTO;
 import com.abcloudz.dbsuite.loaderservice.exception.EntityNotFoundException;
 import com.abcloudz.dbsuite.loaderservice.exception.LoaderServiceApplicationException;
+import com.abcloudz.dbsuite.loaderservice.model.category.MetadataCategory;
 import com.abcloudz.dbsuite.loaderservice.model.category.MetadataCategoryType;
+import com.abcloudz.dbsuite.loaderservice.model.category.VendorType;
 import com.abcloudz.dbsuite.loaderservice.model.metadata.Metadata;
-import com.abcloudz.dbsuite.loaderservice.model.metadata.MetadataType;
 import com.abcloudz.dbsuite.loaderservice.repository.MetadataRepository;
-import com.abcloudz.dbsuite.loaderservice.service.MetadataCategoryService;
-import com.abcloudz.dbsuite.loaderservice.service.MetadataService;
+import com.abcloudz.dbsuite.loaderservice.service.category.MetadataCategoryService;
+import com.abcloudz.dbsuite.loaderservice.service.loader.VendorLoader;
+import com.abcloudz.dbsuite.loaderservice.service.loader.provider.VendorLoaderProvider;
 import com.abcloudz.dbsuite.loaderservice.util.mapper.MetadataMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
+import java.time.LocalDateTime;
 import java.util.Locale;
 
 @Service
@@ -27,6 +28,7 @@ import java.util.Locale;
 public class MetadataServiceImpl implements MetadataService {
 
     private final VendorServiceClient vendorServiceClient;
+    private final VendorLoaderProvider vendorLoaderProvider;
     private final MetadataCategoryService metadataCategoryService;
     private final MetadataRepository metadataRepository;
     private final MessageSource messageSource;
@@ -41,23 +43,24 @@ public class MetadataServiceImpl implements MetadataService {
     @Override
     public MetadataResponseDTO load(String vendorGuid, String connectionGuid, String metadataCategoryGuid, Locale locale) {
         ConnectionResponseDTO connection = vendorServiceClient.findByGuid(vendorGuid, connectionGuid, locale);
-        MetadataCategoryResponseDTO category = metadataCategoryService
-            .findByMetadataCategoryGuid(metadataCategoryGuid, locale);
-        if (!category.getType().equals(MetadataCategoryType.SERVERS.getType())) {
-            getParentMetadata(connectionGuid, locale, connection, category);
+        MetadataCategory category = metadataCategoryService
+            .findModelByMetadataCategoryGuid(metadataCategoryGuid, locale);
+        Metadata parent = null;
+        if (!category.getType().equals(MetadataCategoryType.SERVERS)) {
+            parent = getParentMetadata(connectionGuid, locale, connection, category);
         }
-        return MetadataResponseDTO.builder()
-            .category(BaseMetadataCategoryResponseDTO.builder()
-                .metadataCategoryGuid(category.getMetadataCategoryGuid())
-                .type(category.getType()).build())
-            .connectionGuid(connection.getConnectionGuid())
-            .type(MetadataType.SERVER.getType()).build();
+        VendorType vendorType = VendorType.getType(connection.getVendor().getType());
+        VendorLoader vendorLoader = vendorLoaderProvider.getVendorLoader(vendorType, locale);
+        Metadata metadata = vendorLoader.load(connection, category, parent, locale);
+        metadata.setAddedAt(LocalDateTime.now());
+        //Metadata savedMetadata = metadataRepository.save(metadata);
+        return metadataMapper.clearSubChildren(metadataMapper.toMetadataResponseDTO(metadata));
     }
 
     private Metadata getParentMetadata(String connectionGuid, Locale locale,
-                                       ConnectionResponseDTO connection, MetadataCategoryResponseDTO category) {
+                                       ConnectionResponseDTO connection, MetadataCategory category) {
         return metadataRepository
-            .findByConnectionGuidAndCategory_metadataCategoryGuid(connectionGuid, category.getParent())
+            .findByConnectionGuidAndCategory_metadataCategoryGuid(connectionGuid, category.getParent().getMetadataCategoryGuid())
             .orElseThrow(() ->
                 new LoaderServiceApplicationException(messageSource.getMessage(
                     Error.LOADER_METADATA_PARENT_NOT_LOADED.getKey(),

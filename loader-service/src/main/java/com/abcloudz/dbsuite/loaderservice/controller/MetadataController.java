@@ -1,7 +1,7 @@
 package com.abcloudz.dbsuite.loaderservice.controller;
 
 import com.abcloudz.dbsuite.loaderservice.dto.metadata.MetadataResponseDTO;
-import com.abcloudz.dbsuite.loaderservice.service.MetadataService;
+import com.abcloudz.dbsuite.loaderservice.service.metadata.MetadataService;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;

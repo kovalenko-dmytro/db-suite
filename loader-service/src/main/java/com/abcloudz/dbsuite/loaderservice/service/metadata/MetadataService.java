@@ -1,4 +1,4 @@
-package com.abcloudz.dbsuite.loaderservice.service;
+package com.abcloudz.dbsuite.loaderservice.service.metadata;
 
 import com.abcloudz.dbsuite.loaderservice.dto.metadata.MetadataResponseDTO;
 

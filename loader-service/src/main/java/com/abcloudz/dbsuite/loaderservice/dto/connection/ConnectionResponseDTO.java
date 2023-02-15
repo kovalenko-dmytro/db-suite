@@ -19,5 +19,8 @@ public class ConnectionResponseDTO {
     private String database;
     private String username;
     private String password;
+    private Boolean verifyServerCertificate;
+    private Boolean useSSL;
+    private Boolean requireSSL;
     private boolean verified;
 }

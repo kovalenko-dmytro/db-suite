@@ -1,4 +1,4 @@
-package com.abcloudz.dbsuite.loaderservice.service.impl;
+package com.abcloudz.dbsuite.loaderservice.service.category;
 
 import com.abcloudz.dbsuite.loaderservice.common.Entity;
 import com.abcloudz.dbsuite.loaderservice.common.message.Error;
@@ -7,7 +7,6 @@ import com.abcloudz.dbsuite.loaderservice.exception.EntityNotFoundException;
 import com.abcloudz.dbsuite.loaderservice.model.category.MetadataCategory;
 import com.abcloudz.dbsuite.loaderservice.model.category.VendorType;
 import com.abcloudz.dbsuite.loaderservice.repository.MetadataCategoryRepository;
-import com.abcloudz.dbsuite.loaderservice.service.MetadataCategoryService;
 import com.abcloudz.dbsuite.loaderservice.util.mapper.MetadataCategoryMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
@@ -37,12 +36,21 @@ public class MetadataCategoryServiceImpl implements MetadataCategoryService {
 
     @Override
     public MetadataCategoryResponseDTO findByMetadataCategoryGuid(String metadataCategoryGuid, Locale locale) {
-        MetadataCategory category = metadataCategoryRepository
+        MetadataCategory category = getMetadataCategory(metadataCategoryGuid, locale);
+        return metadataCategoryMapper.clearSubChildren(metadataCategoryMapper.toMetadataCategoryResponseDTO(category));
+    }
+
+    @Override
+    public MetadataCategory findModelByMetadataCategoryGuid(String metadataCategoryGuid, Locale locale) {
+        return getMetadataCategory(metadataCategoryGuid, locale);
+    }
+
+    private MetadataCategory getMetadataCategory(String metadataCategoryGuid, Locale locale) {
+        return metadataCategoryRepository
             .findById(metadataCategoryGuid)
             .orElseThrow(() ->
                 new EntityNotFoundException(
                     messageSource.getMessage(Error.ENTITY_NOT_FOUND.getKey(), params(metadataCategoryGuid), locale)));
-        return metadataCategoryMapper.clearSubChildren(metadataCategoryMapper.toMetadataCategoryResponseDTO(category));
     }
 
     private Object[] params(String guid) {

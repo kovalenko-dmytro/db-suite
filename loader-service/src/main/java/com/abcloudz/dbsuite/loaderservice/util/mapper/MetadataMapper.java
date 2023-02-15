@@ -39,12 +39,18 @@ public interface MetadataMapper {
     }
 
     default MetadataResponseDTO clearSubChildren(MetadataResponseDTO source) {
-        List<MetadataResponseDTO> children = source.getChildren().stream()
-            .peek(metadataResponseDTO -> metadataResponseDTO.setChildren(Collections.emptyList()))
-            .collect(Collectors.toList());
-        List<BaseMetadataCategoryResponseDTO> subCategories = source.getCategory().getSubCategories().stream()
-            .peek(category -> category.setSubCategories(Collections.emptyList()))
-            .collect(Collectors.toList());
+        List<MetadataResponseDTO> children = Collections.emptyList();
+        List<BaseMetadataCategoryResponseDTO> subCategories = Collections.emptyList();
+        if (Objects.nonNull(source.getChildren())) {
+            children = source.getChildren().stream()
+                .peek(metadataResponseDTO -> metadataResponseDTO.setChildren(Collections.emptyList()))
+                .collect(Collectors.toList());
+        }
+        if (Objects.nonNull(source.getCategory().getSubCategories())) {
+            subCategories = source.getCategory().getSubCategories().stream()
+                .peek(category -> category.setSubCategories(Collections.emptyList()))
+                .collect(Collectors.toList());
+        }
         source.setChildren(children);
         source.getCategory().setSubCategories(subCategories);
         return source;
