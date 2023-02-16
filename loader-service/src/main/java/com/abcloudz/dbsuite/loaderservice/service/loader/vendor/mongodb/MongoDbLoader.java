@@ -7,6 +7,7 @@ import com.abcloudz.dbsuite.loaderservice.service.loader.VendorLoader;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.util.List;
 import java.util.Locale;
 
 @Component("MongoDbLoader")
@@ -14,7 +15,7 @@ import java.util.Locale;
 public class MongoDbLoader implements VendorLoader {
 
     @Override
-    public Metadata load(ConnectionResponseDTO connection, MetadataCategory category, Metadata parent, Locale locale) {
+    public List<Metadata> load(ConnectionResponseDTO connection, MetadataCategory category, Metadata parent, Locale locale) {
         throw new UnsupportedOperationException();
     }
 }

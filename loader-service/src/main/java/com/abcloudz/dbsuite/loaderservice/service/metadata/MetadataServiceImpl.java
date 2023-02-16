@@ -20,8 +20,9 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 
-import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Locale;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -41,7 +42,8 @@ public class MetadataServiceImpl implements MetadataService {
     }
 
     @Override
-    public MetadataResponseDTO load(String vendorGuid, String connectionGuid, String metadataCategoryGuid, Locale locale) {
+    public List<MetadataResponseDTO> load(String vendorGuid, String connectionGuid, String metadataCategoryGuid, Locale locale) {
+        //TODO validate if metadata by connection guid, category guid and metadata type....?
         ConnectionResponseDTO connection = vendorServiceClient.findByGuid(vendorGuid, connectionGuid, locale);
         MetadataCategory category = metadataCategoryService
             .findModelByMetadataCategoryGuid(metadataCategoryGuid, locale);
@@ -49,12 +51,15 @@ public class MetadataServiceImpl implements MetadataService {
         if (!category.getType().equals(MetadataCategoryType.SERVERS)) {
             parent = getParentMetadata(connectionGuid, locale, connection, category);
         }
+
         VendorType vendorType = VendorType.getType(connection.getVendor().getType());
         VendorLoader vendorLoader = vendorLoaderProvider.getVendorLoader(vendorType, locale);
-        Metadata metadata = vendorLoader.load(connection, category, parent, locale);
-        metadata.setAddedAt(LocalDateTime.now());
-        //Metadata savedMetadata = metadataRepository.save(metadata);
-        return metadataMapper.clearSubChildren(metadataMapper.toMetadataResponseDTO(metadata));
+        List<Metadata> metadataObjects = vendorLoader.load(connection, category, parent, locale);
+
+        return metadataRepository.saveAll(metadataObjects).stream()
+            .map(metadata -> metadataMapper.clearSubChildren(metadataMapper.toMetadataResponseDTO(metadata)))
+            .collect(Collectors.toList());
+
     }
 
     private Metadata getParentMetadata(String connectionGuid, Locale locale,

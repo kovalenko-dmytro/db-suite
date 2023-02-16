@@ -22,7 +22,8 @@ public enum Error {
     VENDOR_UNSUPPORTED("error.vendor.unsupported"),
     CATEGORY_UNSUPPORTED("error.category.unsupported"),
     CATEGORY_ROOT_NOT_FOUND("error.category.root.not.found"),
-    LOADER_METADATA_PARENT_NOT_LOADED("loader.metadata.parent.not.loaded");
+    LOADER_METADATA_PARENT_NOT_LOADED("loader.metadata.parent.not.loaded"),
+    LOADER_QUERY_NOT_DEFINED("loader.metadata.query.not.defined");
 
     private final String key;
 }

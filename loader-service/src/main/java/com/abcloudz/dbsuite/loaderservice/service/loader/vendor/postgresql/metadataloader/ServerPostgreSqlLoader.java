@@ -1,19 +1,51 @@
 package com.abcloudz.dbsuite.loaderservice.service.loader.vendor.postgresql.metadataloader;
 
-import com.abcloudz.dbsuite.loaderservice.model.category.MetadataCategory;
 import com.abcloudz.dbsuite.loaderservice.model.metadata.Metadata;
+import com.abcloudz.dbsuite.loaderservice.model.metadata.MetadataProperty;
+import com.abcloudz.dbsuite.loaderservice.model.metadata.MetadataPropertyName;
 import com.abcloudz.dbsuite.loaderservice.model.metadata.MetadataType;
-import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;
 
+import java.time.LocalDateTime;
+import java.util.List;
 import java.util.Locale;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 @Component("ServerPostgreSqlLoader")
-@RequiredArgsConstructor
 public class ServerPostgreSqlLoader extends AbstractPostgreSqlMetadataLoader {
 
+    private static final Pattern SERVER_NAME_PATTERN = Pattern.compile("\\/\\/(.*?)\\/");
+
     @Override
-    public Metadata loadMetadata(MetadataCategory category, Metadata parent, Locale locale) {
-        return Metadata.builder().type(MetadataType.SERVER).category(category).parent(parent).build();
+    public List<Metadata> loadMetadata(String query, Locale locale) {
+        LocalDateTime now = LocalDateTime.now();
+        return getJdbcTemplate()
+            .query(query, (rs, rowNum) ->
+                Metadata.builder()
+                    .type(MetadataType.SERVER)
+                    .properties(List.of(
+                        MetadataProperty.builder()
+                            .name(MetadataPropertyName.NAME)
+                            .value(getServerName(rs.getStatement().getConnection().getMetaData().getURL()))
+                            .addedAt(now)
+                            .build(),
+                        MetadataProperty.builder()
+                            .name(MetadataPropertyName.VERSION)
+                            .value(rs.getString("version"))
+                            .addedAt(now)
+                            .build(),
+                        MetadataProperty.builder()
+                            .name(MetadataPropertyName.UUID)
+                            .value(rs.getString("uuid"))
+                            .addedAt(now)
+                            .build()))
+                    .addedAt(now)
+                    .build());
+    }
+
+    private String getServerName(String url) {
+        Matcher matcher = SERVER_NAME_PATTERN.matcher(url);
+        return matcher.find() ? matcher.group(1) : url;
     }
 }

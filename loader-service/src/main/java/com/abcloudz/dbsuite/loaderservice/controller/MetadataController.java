@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
 import java.util.Locale;
 
 @Tag(name = "Metadata REST API")
@@ -25,10 +26,10 @@ public class MetadataController {
     }
 
     @PostMapping
-    public ResponseEntity<MetadataResponseDTO> load(@RequestParam("vendorGuid") String vendorGuid,
-                                                    @RequestParam("connectionGuid") String connectionGuid,
-                                                    @RequestParam("metadataCategoryGuid") String metadataCategoryGuid,
-                                                    @RequestParam(value = "locale", required = false, defaultValue = "en") Locale locale) {
+    public ResponseEntity<List<MetadataResponseDTO>> load(@RequestParam("vendorGuid") String vendorGuid,
+                                                          @RequestParam("connectionGuid") String connectionGuid,
+                                                          @RequestParam("metadataCategoryGuid") String metadataCategoryGuid,
+                                                          @RequestParam(value = "locale", required = false, defaultValue = "en") Locale locale) {
         return ResponseEntity
             .status(HttpStatus.CREATED)
             .body(metadataService.load(vendorGuid, connectionGuid, metadataCategoryGuid, locale));

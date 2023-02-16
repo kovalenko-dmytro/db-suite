@@ -1,6 +1,7 @@
 package com.abcloudz.dbsuite.loaderservice.model.metadata;
 
 import com.abcloudz.dbsuite.loaderservice.model.category.MetadataCategory;
+import com.abcloudz.dbsuite.loaderservice.model.version.Version;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -46,6 +47,22 @@ public class Metadata {
     @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Metadata> children = new ArrayList<>();
 
-    @Column(name = "added_at", nullable = false)
+    @Column(name = "added_at", nullable = false, columnDefinition = "timestamp without time zone DEFAULT (now()):: timestamp (0)")
     private LocalDateTime addedAt;
+
+    public Version getServerVersion() {
+        Metadata current = this;
+        while (!current.getType().equals(MetadataType.SERVER)) {
+            current = current.getParent();
+        }
+        return new Version(extractServerVersion(current));
+    }
+
+    private String extractServerVersion(Metadata metadata) {
+        return metadata.properties.stream()
+            .filter(metadataProperty -> metadataProperty.getName().equals(MetadataPropertyName.VERSION))
+            .findFirst()
+            .get()
+            .getValue();
+    }
 }

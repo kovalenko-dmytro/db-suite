@@ -34,6 +34,6 @@ public class MetadataProperty {
     @JoinColumn(name = "metadata_")
     private Metadata metadata;
 
-    @Column(name = "added_at", nullable = false)
+    @Column(name = "added_at", nullable = false, columnDefinition = "timestamp without time zone DEFAULT (now()):: timestamp (0)")
     private LocalDateTime addedAt;
 }
