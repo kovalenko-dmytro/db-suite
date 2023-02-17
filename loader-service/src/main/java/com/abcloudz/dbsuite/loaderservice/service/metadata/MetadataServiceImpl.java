@@ -4,6 +4,7 @@ import com.abcloudz.dbsuite.loaderservice.client.VendorServiceClient;
 import com.abcloudz.dbsuite.loaderservice.common.Entity;
 import com.abcloudz.dbsuite.loaderservice.common.message.Error;
 import com.abcloudz.dbsuite.loaderservice.dto.connection.ConnectionResponseDTO;
+import com.abcloudz.dbsuite.loaderservice.dto.metadata.LoadMetadataRequestDTO;
 import com.abcloudz.dbsuite.loaderservice.dto.metadata.MetadataResponseDTO;
 import com.abcloudz.dbsuite.loaderservice.exception.EntityNotFoundException;
 import com.abcloudz.dbsuite.loaderservice.exception.LoaderServiceApplicationException;
@@ -42,34 +43,42 @@ public class MetadataServiceImpl implements MetadataService {
     }
 
     @Override
-    public List<MetadataResponseDTO> load(String vendorGuid, String connectionGuid, String metadataCategoryGuid, Locale locale) {
-        //TODO validate if metadata by connection guid, category guid and metadata type....?
-        ConnectionResponseDTO connection = vendorServiceClient.findByGuid(vendorGuid, connectionGuid, locale);
-        MetadataCategory category = metadataCategoryService
-            .findModelByMetadataCategoryGuid(metadataCategoryGuid, locale);
-        Metadata parent = null;
-        if (!category.getType().equals(MetadataCategoryType.SERVERS)) {
-            parent = getParentMetadata(connectionGuid, locale, connection, category);
+    public List<MetadataResponseDTO> load(LoadMetadataRequestDTO request, Locale locale) {
+        List<Metadata> existingMetadata = metadataRepository
+            .findByConnectionGuidAndCategory_metadataCategoryGuidAndParent_metadataGuid(
+                request.getConnectionGuid(),
+                request.getMetadataCategoryGuid(),
+                request.getParentMetadataGuid());
+        if (!existingMetadata.isEmpty()) {
+            return existingMetadata.stream()
+                .map(metadata -> metadataMapper.clearSubChildren(metadataMapper.toMetadataResponseDTO(metadata)))
+                .collect(Collectors.toList());
         }
+        ConnectionResponseDTO connection = vendorServiceClient
+            .findByGuid(request.getVendorGuid(), request.getConnectionGuid(), locale);
+        MetadataCategory category = metadataCategoryService
+            .findModelByMetadataCategoryGuid(request.getMetadataCategoryGuid(), locale);
+        Metadata parent = category.getType().equals(MetadataCategoryType.SERVERS)
+            ? null
+            : getParentMetadata(request.getParentMetadataGuid(), connection.getConnectionName(), category.getType().getType(), locale);
 
         VendorType vendorType = VendorType.getType(connection.getVendor().getType());
         VendorLoader vendorLoader = vendorLoaderProvider.getVendorLoader(vendorType, locale);
-        List<Metadata> metadataObjects = vendorLoader.load(connection, category, parent, locale);
+        List<Metadata> metadata = vendorLoader.load(connection, category, parent, locale);
 
-        return metadataRepository.saveAll(metadataObjects).stream()
-            .map(metadata -> metadataMapper.clearSubChildren(metadataMapper.toMetadataResponseDTO(metadata)))
+        return metadataRepository.saveAll(metadata).stream()
+            .map(item -> metadataMapper.clearSubChildren(metadataMapper.toMetadataResponseDTO(item)))
             .collect(Collectors.toList());
-
     }
 
-    private Metadata getParentMetadata(String connectionGuid, Locale locale,
-                                       ConnectionResponseDTO connection, MetadataCategory category) {
-        return metadataRepository
-            .findByConnectionGuidAndCategory_metadataCategoryGuid(connectionGuid, category.getParent().getMetadataCategoryGuid())
-            .orElseThrow(() ->
-                new LoaderServiceApplicationException(messageSource.getMessage(
-                    Error.LOADER_METADATA_PARENT_NOT_LOADED.getKey(),
-                    new Object[]{connection.getConnectionName(), category.getType()}, locale)));
+    private Metadata getParentMetadata(String parentMetadataGuid, String connectionName, String categoryType, Locale locale) {
+        try {
+            return getMetadataByMetadataGuid(parentMetadataGuid, locale);
+        } catch (Exception e) {
+            throw new LoaderServiceApplicationException(messageSource.getMessage(
+                Error.LOADER_METADATA_PARENT_NOT_LOADED.getKey(),
+                new Object[]{connectionName, categoryType}, locale));
+        }
     }
 
     @Override

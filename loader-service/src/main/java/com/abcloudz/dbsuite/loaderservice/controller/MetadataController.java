@@ -1,5 +1,6 @@
 package com.abcloudz.dbsuite.loaderservice.controller;
 
+import com.abcloudz.dbsuite.loaderservice.dto.metadata.LoadMetadataRequestDTO;
 import com.abcloudz.dbsuite.loaderservice.dto.metadata.MetadataResponseDTO;
 import com.abcloudz.dbsuite.loaderservice.service.metadata.MetadataService;
 import io.swagger.v3.oas.annotations.tags.Tag;
@@ -8,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import java.util.List;
 import java.util.Locale;
 
@@ -26,13 +28,11 @@ public class MetadataController {
     }
 
     @PostMapping
-    public ResponseEntity<List<MetadataResponseDTO>> load(@RequestParam("vendorGuid") String vendorGuid,
-                                                          @RequestParam("connectionGuid") String connectionGuid,
-                                                          @RequestParam("metadataCategoryGuid") String metadataCategoryGuid,
+    public ResponseEntity<List<MetadataResponseDTO>> load(@RequestBody @Valid LoadMetadataRequestDTO request,
                                                           @RequestParam(value = "locale", required = false, defaultValue = "en") Locale locale) {
         return ResponseEntity
             .status(HttpStatus.CREATED)
-            .body(metadataService.load(vendorGuid, connectionGuid, metadataCategoryGuid, locale));
+            .body(metadataService.load(request, locale));
     }
 
     @DeleteMapping(value = "/{metadataGuid}")
