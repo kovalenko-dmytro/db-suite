@@ -18,5 +18,6 @@ public class PostgreSqlMetadataLoaderProvider extends AbstractMetadataLoaderProv
         getMetadataLoaders().put(MetadataCategoryType.SERVERS, getBeanByName("ServerPostgreSqlLoader"));
         getMetadataLoaders().put(MetadataCategoryType.DATABASES, getBeanByName("DatabasePostgreSqlLoader"));
         getMetadataLoaders().put(MetadataCategoryType.SCHEMAS, getBeanByName("SchemaPostgreSqlLoader"));
+        getMetadataLoaders().put(MetadataCategoryType.EXTENSIONS, getBeanByName("ExtensionPostgreSqlLoader"));
     }
 }

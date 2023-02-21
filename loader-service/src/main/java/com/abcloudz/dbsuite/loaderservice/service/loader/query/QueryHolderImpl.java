@@ -22,34 +22,28 @@ public class QueryHolderImpl implements QueryHolder {
     private static final String QUERY_RESOURCE_PATH = "queries/{0}/version_{1}.properties";
 
     private final MessageSource messageSource;
-    private final Map<VendorType, Map<Version, String>> queryResources = Map.of(
-        VendorType.POSTGRESQL, Map.of(
-            new Version("9.2"), "9.2",
-            new Version("9.4"), "9.4",
-            new Version("10.0"), "10.0",
-            new Version("11.2"), "11.2",
-            new Version("12.0"), "12.0"
-        )
+    private final Map<VendorType, List<Version>> resourceVersions = Map.of(
+        VendorType.POSTGRESQL, List.of(new Version("9.2"), new Version("9.4"), new Version("10.0"),new Version("11.2"), new Version("12.0"))
     );
 
     @Override
     public String getQuery(VendorType vendorType, Version serverVersion, QueryKey queryKey, Locale locale) {
-        Map<Version, String> vendorQueryResources = queryResources.get(vendorType);
-        if (Objects.isNull(vendorQueryResources)) {
+        List<Version> vendorResourceVersions = resourceVersions.get(vendorType);
+        if (Objects.isNull(vendorResourceVersions)) {
             throw new LoaderServiceApplicationException(
                 messageSource.getMessage(Error.VENDOR_UNSUPPORTED.getKey(), new Object[]{vendorType}, locale));
         }
-        List<String> filteredResourceFileNames = filterQueryResources(vendorQueryResources, serverVersion);
-        return findQuery(vendorType, queryKey, filteredResourceFileNames, locale);
+        List<String> filteredResourceVersions = filterResourceVersions(vendorResourceVersions, serverVersion);
+        return findQuery(vendorType, queryKey, filteredResourceVersions, locale);
     }
 
-    private String findQuery(VendorType vendorType, QueryKey queryKey, List<String> filenames, Locale locale) {
+    private String findQuery(VendorType vendorType, QueryKey queryKey, List<String> filteredResourceVersions, Locale locale) {
         String query = null;
         try {
             Properties properties;
             String path;
-            for (String filename : filenames) {
-                path = MessageFormat.format(QUERY_RESOURCE_PATH, vendorType.getVendorType(), filename);
+            for (String resourceVersion : filteredResourceVersions) {
+                path = MessageFormat.format(QUERY_RESOURCE_PATH, vendorType.getVendorType(), resourceVersion);
                 properties = PropertiesLoaderUtils.loadProperties(new ClassPathResource(path));
                 query = properties.getProperty(queryKey.getKey());
                 if (Objects.nonNull(query)) {
@@ -66,14 +60,14 @@ public class QueryHolderImpl implements QueryHolder {
         }
     }
 
-    private List<String> filterQueryResources(Map<Version, String> vendorQueryResources, Version serverVersion) {
-        List<String> result = vendorQueryResources.entrySet().stream()
-            .filter(entry -> entry.getKey().compareTo(serverVersion) <= 0)
-            .sorted(Map.Entry.<Version, String>comparingByKey().reversed())
-            .map(Map.Entry::getValue)
+    private List<String> filterResourceVersions(List<Version> vendorResourceVersions, Version serverVersion) {
+        List<String> result = vendorResourceVersions.stream()
+            .filter(version -> version.compareTo(serverVersion) <= 0)
+            .sorted(Comparator.reverseOrder())
+            .map(Version::toString)
             .collect(Collectors.toList());
         if (result.isEmpty()) {
-            result.add(vendorQueryResources.get(Collections.min(vendorQueryResources.keySet())));
+            result.add(Collections.min(vendorResourceVersions).toString());
         }
         return result;
     }

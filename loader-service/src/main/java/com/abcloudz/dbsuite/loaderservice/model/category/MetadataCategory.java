@@ -1,10 +1,9 @@
 package com.abcloudz.dbsuite.loaderservice.model.category;
 
 import com.abcloudz.dbsuite.loaderservice.model.version.Version;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -18,7 +17,9 @@ import java.util.List;
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@Data
+@Getter
+@Setter
+@EqualsAndHashCode(exclude="parent")
 public class MetadataCategory {
 
     @Id
@@ -47,5 +48,48 @@ public class MetadataCategory {
     private LocalDateTime addedAt;
 
     @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
+    @Fetch(FetchMode.SELECT)
     private List<MetadataCategory> subCategories = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        StringBuilder builder = new StringBuilder();
+        builder.append("MetadataCategory [");
+        if (metadataCategoryGuid != null) {
+            builder.append("metadataCategoryGuid = ");
+            builder.append(metadataCategoryGuid).append(", ");
+        }
+        if (type != null) {
+            builder.append("type = ");
+            builder.append(type.getType()).append(", ");
+        }
+        if (type != null) {
+            builder.append("type = ");
+            builder.append(type.getType()).append(", ");
+        }
+        builder.append("root = ");
+        builder.append(root).append(", ");
+        if (vendorType != null) {
+            builder.append("vendorType = ");
+            builder.append(vendorType.getVendorType()).append(", ");
+        }
+        if (parent != null) {
+            builder.append("parent = ");
+            builder.append(parent.getMetadataCategoryGuid()).append(", ");
+        }
+        if (versionFrom != null) {
+            builder.append("versionFrom = ");
+            builder.append(versionFrom).append(", ");
+        }
+        if (addedAt != null) {
+            builder.append("addedAt = ");
+            builder.append(addedAt).append(", ");
+        }
+        if (subCategories != null) {
+            builder.append("subCategories = ");
+            builder.append(subCategories);
+        }
+        builder.append("]");
+        return builder.toString();
+    }
 }

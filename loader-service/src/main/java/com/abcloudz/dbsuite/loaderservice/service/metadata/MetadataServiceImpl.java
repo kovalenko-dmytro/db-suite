@@ -39,7 +39,7 @@ public class MetadataServiceImpl implements MetadataService {
     @Override
     public MetadataResponseDTO findByMetadataGuid(String metadataGuid, Locale locale) {
         Metadata metadata = getMetadataByMetadataGuid(metadataGuid, locale);
-        return metadataMapper.clearSubChildren(metadataMapper.toMetadataResponseDTO(metadata));
+        return metadataMapper.toMetadataResponseDTO(metadata);
     }
 
     @Override
@@ -50,9 +50,7 @@ public class MetadataServiceImpl implements MetadataService {
                 request.getMetadataCategoryGuid(),
                 request.getParentMetadataGuid());
         if (!existingMetadata.isEmpty()) {
-            return existingMetadata.stream()
-                .map(metadata -> metadataMapper.clearSubChildren(metadataMapper.toMetadataResponseDTO(metadata)))
-                .collect(Collectors.toList());
+            return existingMetadata.stream().map(metadataMapper::toMetadataResponseDTO).collect(Collectors.toList());
         }
         ConnectionResponseDTO connection = vendorServiceClient
             .findByGuid(request.getVendorGuid(), request.getConnectionGuid(), locale);
@@ -67,7 +65,7 @@ public class MetadataServiceImpl implements MetadataService {
         List<Metadata> metadata = vendorLoader.load(connection, category, parent, locale);
 
         return metadataRepository.saveAll(metadata).stream()
-            .map(item -> metadataMapper.clearSubChildren(metadataMapper.toMetadataResponseDTO(item)))
+            .map(metadataMapper::toMetadataResponseDTO)
             .collect(Collectors.toList());
     }
 

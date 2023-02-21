@@ -7,6 +7,6 @@ import java.util.Locale;
 
 public interface MetadataLoader<DC> {
 
-    List<Metadata> loadMetadata(String query, Locale locale);
+    List<Metadata> loadMetadata(String query, Metadata parent, Locale locale);
     void setDatabaseClient(DC databaseClient);
 }

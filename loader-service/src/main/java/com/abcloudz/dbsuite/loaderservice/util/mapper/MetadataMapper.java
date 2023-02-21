@@ -3,6 +3,7 @@ package com.abcloudz.dbsuite.loaderservice.util.mapper;
 import com.abcloudz.dbsuite.loaderservice.dto.category.BaseMetadataCategoryResponseDTO;
 import com.abcloudz.dbsuite.loaderservice.dto.metadata.MetadataPropertyResponseDTO;
 import com.abcloudz.dbsuite.loaderservice.dto.metadata.MetadataResponseDTO;
+import com.abcloudz.dbsuite.loaderservice.model.category.MetadataCategory;
 import com.abcloudz.dbsuite.loaderservice.model.category.MetadataCategoryType;
 import com.abcloudz.dbsuite.loaderservice.model.metadata.Metadata;
 import com.abcloudz.dbsuite.loaderservice.model.metadata.MetadataProperty;
@@ -20,10 +21,10 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface MetadataMapper {
 
-    @Mapping(target="parent", source="parent.metadataGuid")
+    @Mapping(target = "parent", source = "parent.metadataGuid")
     MetadataResponseDTO toMetadataResponseDTO(Metadata metadata);
 
-    @Mapping(target="metadataGuid", source="metadata.metadataGuid")
+    @Mapping(target = "metadataGuid", source = "metadata.metadataGuid")
     MetadataPropertyResponseDTO toMetadataPropertyResponseDTO(MetadataProperty metadataProperty);
 
     default String metadataTypeToString(MetadataType type) {
@@ -38,21 +39,23 @@ public interface MetadataMapper {
         return (Objects.isNull(type)) ? null : type.getType();
     }
 
-    default MetadataResponseDTO clearSubChildren(MetadataResponseDTO source) {
-        List<MetadataResponseDTO> children = Collections.emptyList();
-        List<BaseMetadataCategoryResponseDTO> subCategories = Collections.emptyList();
-        if (Objects.nonNull(source.getChildren())) {
-            children = source.getChildren().stream()
-                .peek(metadataResponseDTO -> metadataResponseDTO.setChildren(Collections.emptyList()))
-                .collect(Collectors.toList());
-        }
-        if (Objects.nonNull(source.getCategory().getSubCategories())) {
-            subCategories = source.getCategory().getSubCategories().stream()
-                .peek(category -> category.setSubCategories(Collections.emptyList()))
-                .collect(Collectors.toList());
-        }
-        source.setChildren(children);
-        source.getCategory().setSubCategories(subCategories);
-        return source;
+    default BaseMetadataCategoryResponseDTO metadataCategoryToBaseMetadataCategoryResponseDTO(MetadataCategory metadataCategory) {
+        return Objects.isNull(metadataCategory)
+            ? null
+            : BaseMetadataCategoryResponseDTO.builder()
+            .metadataCategoryGuid(metadataCategory.getMetadataCategoryGuid())
+            .type(metadataCategory.getType().getType())
+            .subCategories(collectSubCategories(metadataCategory))
+            .build();
+    }
+
+    private List<BaseMetadataCategoryResponseDTO> collectSubCategories(MetadataCategory metadataCategory) {
+        return metadataCategory.getSubCategories().stream()
+            .map(subCategory -> BaseMetadataCategoryResponseDTO.builder()
+                .metadataCategoryGuid(subCategory.getMetadataCategoryGuid())
+                .type(subCategory.getType().getType())
+                .subCategories(Collections.emptyList())
+                .build())
+            .collect(Collectors.toList());
     }
 }

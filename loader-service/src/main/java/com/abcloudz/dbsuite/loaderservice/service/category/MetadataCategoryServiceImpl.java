@@ -31,13 +31,13 @@ public class MetadataCategoryServiceImpl implements MetadataCategoryService {
             .orElseThrow(() ->
                 new EntityNotFoundException(
                     messageSource.getMessage(Error.CATEGORY_ROOT_NOT_FOUND.getKey(), new Object[]{vendorType}, locale)));
-        return metadataCategoryMapper.clearSubChildren(metadataCategoryMapper.toMetadataCategoryResponseDTO(category));
+        return metadataCategoryMapper.toMetadataCategoryResponseDTO(category);
     }
 
     @Override
     public MetadataCategoryResponseDTO findByMetadataCategoryGuid(String metadataCategoryGuid, Locale locale) {
         MetadataCategory category = getMetadataCategory(metadataCategoryGuid, locale);
-        return metadataCategoryMapper.clearSubChildren(metadataCategoryMapper.toMetadataCategoryResponseDTO(category));
+        return metadataCategoryMapper.toMetadataCategoryResponseDTO(category);
     }
 
     @Override

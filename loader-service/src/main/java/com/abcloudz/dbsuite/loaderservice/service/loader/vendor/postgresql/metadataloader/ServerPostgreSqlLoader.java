@@ -4,22 +4,21 @@ import com.abcloudz.dbsuite.loaderservice.model.metadata.Metadata;
 import com.abcloudz.dbsuite.loaderservice.model.metadata.MetadataProperty;
 import com.abcloudz.dbsuite.loaderservice.model.metadata.MetadataPropertyName;
 import com.abcloudz.dbsuite.loaderservice.model.metadata.MetadataType;
+import com.abcloudz.dbsuite.loaderservice.service.loader.RDBMSMetadataLoader;
 import org.springframework.stereotype.Component;
 
-import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Component("ServerPostgreSqlLoader")
-public class ServerPostgreSqlLoader extends AbstractPostgreSqlMetadataLoader {
+public class ServerPostgreSqlLoader extends RDBMSMetadataLoader {
 
-    private static final Pattern SERVER_NAME_PATTERN = Pattern.compile("\\/\\/(.*?)\\/");
+    private static final Pattern SERVER_NAME_PATTERN = Pattern.compile("//(.*?)/");
 
     @Override
-    public List<Metadata> loadMetadata(String query, Locale locale) {
-        LocalDateTime now = LocalDateTime.now();
+    public List<Metadata> loadMetadata(String query, Metadata parent, Locale locale) {
         return getJdbcTemplate()
             .query(query, (rs, rowNum) ->
                 Metadata.builder()
@@ -28,19 +27,15 @@ public class ServerPostgreSqlLoader extends AbstractPostgreSqlMetadataLoader {
                         MetadataProperty.builder()
                             .name(MetadataPropertyName.NAME)
                             .value(getServerName(rs.getStatement().getConnection().getMetaData().getURL()))
-                            .addedAt(now)
                             .build(),
                         MetadataProperty.builder()
                             .name(MetadataPropertyName.VERSION)
                             .value(rs.getString("version"))
-                            .addedAt(now)
                             .build(),
                         MetadataProperty.builder()
                             .name(MetadataPropertyName.UUID)
                             .value(rs.getString("uuid"))
-                            .addedAt(now)
                             .build()))
-                    .addedAt(now)
                     .build());
     }
 

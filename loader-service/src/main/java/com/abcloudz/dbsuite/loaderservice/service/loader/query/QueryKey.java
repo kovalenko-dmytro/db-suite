@@ -1,5 +1,6 @@
 package com.abcloudz.dbsuite.loaderservice.service.loader.query;
 
+import com.abcloudz.dbsuite.loaderservice.model.category.MetadataCategoryType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
@@ -27,4 +28,19 @@ public enum QueryKey {
     PRIMARY_KEY("metadata.query.primary-key");
 
     private final String key;
+
+    public static QueryKey obtainQueryKey(MetadataCategoryType type) {
+        switch (type) {
+            case SERVERS:
+                return SERVER;
+            case DATABASES:
+                return DATABASE;
+            case SCHEMAS:
+                return SCHEMA;
+            case EXTENSIONS:
+                return EXTENSION;
+            default:
+                throw new UnsupportedOperationException();
+        }
+    }
 }

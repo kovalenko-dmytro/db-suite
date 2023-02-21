@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Locale;
 
-@Component("SchemaPostgreSqlLoader")
-public class SchemaPostgreSqlLoader extends RDBMSMetadataLoader {
+@Component("ExtensionPostgreSqlLoader")
+public class ExtensionPostgreSqlLoader extends RDBMSMetadataLoader {
 
     @Override
     public List<Metadata> loadMetadata(String query, Metadata parent, Locale locale) {
@@ -19,15 +19,23 @@ public class SchemaPostgreSqlLoader extends RDBMSMetadataLoader {
         return getJdbcTemplate()
             .query(query, (rs, rowNum) ->
                 Metadata.builder()
-                    .type(MetadataType.SCHEMA)
+                    .type(MetadataType.EXTENSION)
                     .properties(List.of(
                         MetadataProperty.builder()
-                            .name(MetadataPropertyName.NAME)
-                            .value(rs.getString("name"))
+                            .name(MetadataPropertyName.EXTENSION_OWNER_ID)
+                            .value(String.valueOf(rs.getInt("extowner")))
                             .build(),
                         MetadataProperty.builder()
-                            .name(MetadataPropertyName.IS_SYSTEM)
-                            .value(String.valueOf(rs.getBoolean("is_system")))
+                            .name(MetadataPropertyName.EXTENSION_NAMESPACE_ID)
+                            .value(String.valueOf(rs.getInt("extnamespace")))
+                            .build(),
+                        MetadataProperty.builder()
+                            .name(MetadataPropertyName.EXTENSION_IS_RELOCATABLE)
+                            .value(String.valueOf(rs.getBoolean("extrelocatable")))
+                            .build(),
+                        MetadataProperty.builder()
+                            .name(MetadataPropertyName.EXTENSION_VERSION)
+                            .value(rs.getString("extversion"))
                             .build()))
                     .build(),
                 params);

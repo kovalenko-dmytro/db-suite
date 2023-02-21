@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.CreationTimestamp;
 import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
@@ -34,6 +35,7 @@ public class MetadataProperty {
     @JoinColumn(name = "metadata_")
     private Metadata metadata;
 
-    @Column(name = "added_at", nullable = false, columnDefinition = "timestamp without time zone DEFAULT (now()):: timestamp (0)")
+    @Column(name = "added_at", nullable = false)
+    @CreationTimestamp
     private LocalDateTime addedAt;
 }

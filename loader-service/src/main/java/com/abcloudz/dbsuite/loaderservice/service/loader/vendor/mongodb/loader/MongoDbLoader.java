@@ -1,4 +1,4 @@
-package com.abcloudz.dbsuite.loaderservice.service.loader.vendor.mongodb;
+package com.abcloudz.dbsuite.loaderservice.service.loader.vendor.mongodb.loader;
 
 import com.abcloudz.dbsuite.loaderservice.dto.connection.ConnectionResponseDTO;
 import com.abcloudz.dbsuite.loaderservice.model.category.MetadataCategory;

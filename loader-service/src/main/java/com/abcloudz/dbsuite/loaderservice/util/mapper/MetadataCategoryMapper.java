@@ -32,11 +32,21 @@ public interface MetadataCategoryMapper {
         return (Objects.isNull(type)) ? null : type.getVendorType();
     }
 
-    default MetadataCategoryResponseDTO clearSubChildren(MetadataCategoryResponseDTO source) {
-        List<MetadataCategoryResponseDTO> subCategories = source.getSubCategories().stream()
-            .peek(metadataCategoryResponseDTO -> metadataCategoryResponseDTO.setSubCategories(Collections.emptyList()))
+    default List<MetadataCategoryResponseDTO> metadataCategoryListToMetadataCategoryResponseDTOList(List<MetadataCategory> list) {
+        if (Objects.isNull(list)) {
+            return null;
+        }
+        return list.stream()
+            .map(category -> MetadataCategoryResponseDTO.builder()
+                .metadataCategoryGuid(category.getMetadataCategoryGuid())
+                .type(category.getType().getType())
+                .root(category.isRoot())
+                .vendorType(category.getVendorType().getVendorType())
+                .parent(category.getParent().getMetadataCategoryGuid())
+                .versionFrom(category.getVersionFrom().toString())
+                .addedAt(category.getAddedAt())
+                .subCategories(Collections.emptyList())
+                .build())
             .collect(Collectors.toList());
-        source.setSubCategories(subCategories);
-        return source;
     }
 }
