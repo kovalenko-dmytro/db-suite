@@ -3,6 +3,7 @@ package com.abcloudz.dbsuite.loaderservice.service.loader.vendor.postgresql.load
 import com.abcloudz.dbsuite.loaderservice.dto.connection.ConnectionResponseDTO;
 import com.abcloudz.dbsuite.loaderservice.model.category.MetadataCategory;
 import com.abcloudz.dbsuite.loaderservice.model.category.VendorType;
+import com.abcloudz.dbsuite.loaderservice.model.databaseclient.DatabaseClient;
 import com.abcloudz.dbsuite.loaderservice.model.metadata.Metadata;
 import com.abcloudz.dbsuite.loaderservice.model.version.Version;
 import com.abcloudz.dbsuite.loaderservice.service.loader.MetadataLoader;
@@ -23,18 +24,20 @@ import java.util.Objects;
 @RequiredArgsConstructor
 public class PostgreSqlLoader implements VendorLoader {
 
-    private final DatabaseClientProvider<JdbcTemplate> rdbmcDatabaseClientProvider;
-    private final MetadataLoaderProvider<JdbcTemplate> postgreSqlMetadataLoaderProvider;
+    private final DatabaseClientProvider databaseClientProvider;
+    private final MetadataLoaderProvider postgreSqlMetadataLoaderProvider;
     private final QueryHolder queryHolder;
 
     @Override
     public List<Metadata> load(ConnectionResponseDTO connection, MetadataCategory category, Metadata parent, Locale locale) {
-        MetadataLoader<JdbcTemplate> metadataLoader = postgreSqlMetadataLoaderProvider.getMetadataLoader(category.getType(), locale);
-        JdbcTemplate databaseClient = rdbmcDatabaseClientProvider.obtainClient(connection);
+        VendorType vendorType = VendorType.getType(connection.getVendor().getType());
+        MetadataLoader metadataLoader = postgreSqlMetadataLoaderProvider.getMetadataLoader(category.getType(), locale);
+        DatabaseClient<?> databaseClient = databaseClientProvider.obtainClient(vendorType, connection);
         metadataLoader.setDatabaseClient(databaseClient);
 
-        VendorType vendorType = VendorType.getType(connection.getVendor().getType());
-        Version serverVersion = Objects.isNull(parent) ? obtainRDBMSServerVersion(databaseClient) : parent.getServerVersion();
+        Version serverVersion = Objects.isNull(parent)
+            ? obtainRDBMSServerVersion((JdbcTemplate) databaseClient.getClient())
+            : parent.getServerVersion();
         String query = queryHolder.getQuery(vendorType, serverVersion, QueryKey.obtainQueryKey(category.getType()), locale);
 
         List<Metadata> metadataObjects = metadataLoader.loadMetadata(query, parent, locale);

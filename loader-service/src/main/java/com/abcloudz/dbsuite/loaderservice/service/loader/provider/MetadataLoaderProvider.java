@@ -5,7 +5,7 @@ import com.abcloudz.dbsuite.loaderservice.service.loader.MetadataLoader;
 
 import java.util.Locale;
 
-public interface MetadataLoaderProvider<DC> {
+public interface MetadataLoaderProvider {
 
-    MetadataLoader<DC> getMetadataLoader(MetadataCategoryType categoryType, Locale locale);
+    MetadataLoader getMetadataLoader(MetadataCategoryType categoryType, Locale locale);
 }

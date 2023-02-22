@@ -22,16 +22,16 @@ public abstract class AbstractMetadataLoaderProvider implements MetadataLoaderPr
     private final MessageSource messageSource;
 
     @Getter
-    private final Map<MetadataCategoryType, MetadataLoader<?>> metadataLoaders = new EnumMap<>(MetadataCategoryType.class);
+    private final Map<MetadataCategoryType, MetadataLoader> metadataLoaders = new EnumMap<>(MetadataCategoryType.class);
 
     @Override
-    public MetadataLoader<?> getMetadataLoader(MetadataCategoryType categoryType, Locale locale) {
+    public MetadataLoader getMetadataLoader(MetadataCategoryType categoryType, Locale locale) {
         return Optional
             .ofNullable(metadataLoaders.get(categoryType))
             .orElseThrow(() -> new UnsupportedOperationException(getMessage(categoryType, locale)));
     }
 
-    protected MetadataLoader<?> getBeanByName(String beanName) {
+    protected MetadataLoader getBeanByName(String beanName) {
         return context.getBean(beanName, MetadataLoader.class);
     }
 
