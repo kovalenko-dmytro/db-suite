@@ -71,8 +71,12 @@ public class Metadata {
             .getValue();
     }
 
-    public String extractProperty(MetadataPropertyName name) {
-        return this.properties.stream()
+    public String extractProperty(MetadataType type, MetadataPropertyName name) {
+        Metadata targetMetadata = this;
+        while (!targetMetadata.getType().equals(type)) {
+            targetMetadata = targetMetadata.getParent();
+        }
+        return targetMetadata.getProperties().stream()
             .filter(metadataProperty -> metadataProperty.getName().equals(name))
             .findFirst()
             .orElseThrow(IllegalArgumentException::new)

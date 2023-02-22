@@ -16,7 +16,10 @@ public enum MetadataPropertyName {
     EXTENSION_OWNER_ID("extension_owner_id"),
     EXTENSION_NAMESPACE_ID("extension_namespace_id"),
     EXTENSION_IS_RELOCATABLE("extension_is_relocatable"),
-    EXTENSION_VERSION("extension_version");
+    EXTENSION_VERSION("extension_version"),
+    TABLE_IS_TYPED("is_typed_table"),
+    IS_UPDATABLE("is_updatable"),
+    TEXT("text");
 
     private final String name;
 }

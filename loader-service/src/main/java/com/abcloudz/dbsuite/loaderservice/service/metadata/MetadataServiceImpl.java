@@ -86,14 +86,11 @@ public class MetadataServiceImpl implements MetadataService {
     }
 
     private Metadata getMetadataByMetadataGuid(String metadataGuid, Locale locale) {
+        Object[] params = {Entity.METADATA.getName(), Entity.Field.GUID.getFieldName(), metadataGuid};
         return metadataRepository
             .findById(metadataGuid)
             .orElseThrow(() ->
                 new EntityNotFoundException(
-                    messageSource.getMessage(Error.ENTITY_NOT_FOUND.getKey(), params(metadataGuid), locale)));
-    }
-
-    private Object[] params(String guid) {
-        return new Object[]{Entity.METADATA.getName(), Entity.Field.GUID.getFieldName(), guid};
+                    messageSource.getMessage(Error.ENTITY_NOT_FOUND.getKey(), params, locale)));
     }
 }

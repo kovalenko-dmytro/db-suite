@@ -10,24 +10,26 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Locale;
 
-@Component("SchemaPostgreSqlLoader")
-public class SchemaPostgreSqlLoader extends RDBMSMetadataLoader {
+@Component("TablePostgreSqlLoader")
+public class TablePostgreSqlLoader extends RDBMSMetadataLoader {
 
     @Override
     public List<Metadata> loadMetadata(String query, Metadata parent, Locale locale) {
-        Object[] params = new Object[]{parent.extractProperty(MetadataType.DATABASE, MetadataPropertyName.NAME)};
+        Object[] params = new Object[]{
+            parent.extractProperty(MetadataType.DATABASE, MetadataPropertyName.NAME),
+            parent.extractProperty(MetadataType.SCHEMA, MetadataPropertyName.NAME)};
         return getJdbcTemplate()
             .query(query, (rs, rowNum) ->
                 Metadata.builder()
-                    .type(MetadataType.SCHEMA)
+                    .type(MetadataType.TABLE)
                     .properties(List.of(
                         MetadataProperty.builder()
                             .name(MetadataPropertyName.NAME)
                             .value(rs.getString("name"))
                             .build(),
                         MetadataProperty.builder()
-                            .name(MetadataPropertyName.IS_SYSTEM)
-                            .value(String.valueOf(rs.getBoolean("is_system")))
+                            .name(MetadataPropertyName.TABLE_IS_TYPED)
+                            .value(String.valueOf(rs.getBoolean("is_typed_table")))
                             .build()))
                     .build(),
                 params);

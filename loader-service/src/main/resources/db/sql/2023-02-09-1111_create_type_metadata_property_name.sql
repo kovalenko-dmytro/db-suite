@@ -8,4 +8,7 @@ CREATE TYPE metadata_property_name AS ENUM (
 'extension_owner_id',
 'extension_namespace_id',
 'extension_is_relocatable',
-'extension_version');
+'extension_version',
+'is_typed_table',
+'is_updatable',
+'text');

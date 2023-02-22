@@ -10,32 +10,30 @@ import org.springframework.stereotype.Component;
 import java.util.List;
 import java.util.Locale;
 
-@Component("ExtensionPostgreSqlLoader")
-public class ExtensionPostgreSqlLoader extends RDBMSMetadataLoader {
+@Component("ViewPostgreSqlLoader")
+public class ViewPostgreSqlLoader extends RDBMSMetadataLoader {
 
     @Override
     public List<Metadata> loadMetadata(String query, Metadata parent, Locale locale) {
-        Object[] params = new Object[]{parent.extractProperty(MetadataType.DATABASE, MetadataPropertyName.NAME)};
+        Object[] params = new Object[]{
+            parent.extractProperty(MetadataType.DATABASE, MetadataPropertyName.NAME),
+            parent.extractProperty(MetadataType.SCHEMA, MetadataPropertyName.NAME)};
         return getJdbcTemplate()
             .query(query, (rs, rowNum) ->
                 Metadata.builder()
-                    .type(MetadataType.EXTENSION)
+                    .type(MetadataType.VIEW)
                     .properties(List.of(
                         MetadataProperty.builder()
-                            .name(MetadataPropertyName.EXTENSION_OWNER_ID)
-                            .value(String.valueOf(rs.getInt("extowner")))
+                            .name(MetadataPropertyName.NAME)
+                            .value(rs.getString("name"))
                             .build(),
                         MetadataProperty.builder()
-                            .name(MetadataPropertyName.EXTENSION_NAMESPACE_ID)
-                            .value(String.valueOf(rs.getInt("extnamespace")))
+                            .name(MetadataPropertyName.IS_UPDATABLE)
+                            .value(String.valueOf(rs.getBoolean("is_updatable")))
                             .build(),
                         MetadataProperty.builder()
-                            .name(MetadataPropertyName.EXTENSION_IS_RELOCATABLE)
-                            .value(String.valueOf(rs.getBoolean("extrelocatable")))
-                            .build(),
-                        MetadataProperty.builder()
-                            .name(MetadataPropertyName.EXTENSION_VERSION)
-                            .value(rs.getString("extversion"))
+                            .name(MetadataPropertyName.TEXT)
+                            .value(rs.getString("text"))
                             .build()))
                     .build(),
                 params);

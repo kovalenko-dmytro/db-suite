@@ -39,6 +39,10 @@ public enum QueryKey {
                 return SCHEMA;
             case EXTENSIONS:
                 return EXTENSION;
+            case TABLES:
+                return TABLE;
+            case VIEWS:
+                return VIEW;
             default:
                 throw new UnsupportedOperationException();
         }
