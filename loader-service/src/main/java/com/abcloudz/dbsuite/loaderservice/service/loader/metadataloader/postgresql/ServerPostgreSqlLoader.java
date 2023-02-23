@@ -1,26 +1,27 @@
-package com.abcloudz.dbsuite.loaderservice.service.loader.vendor.postgresql.metadataloader;
+package com.abcloudz.dbsuite.loaderservice.service.loader.metadataloader.postgresql;
 
+import com.abcloudz.dbsuite.loaderservice.dto.loader.LoadContext;
 import com.abcloudz.dbsuite.loaderservice.model.metadata.Metadata;
 import com.abcloudz.dbsuite.loaderservice.model.metadata.MetadataProperty;
 import com.abcloudz.dbsuite.loaderservice.model.metadata.MetadataPropertyName;
 import com.abcloudz.dbsuite.loaderservice.model.metadata.MetadataType;
-import com.abcloudz.dbsuite.loaderservice.service.loader.RDBMSMetadataLoader;
+import com.abcloudz.dbsuite.loaderservice.service.loader.metadataloader.MetadataLoader;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Locale;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 @Component("ServerPostgreSqlLoader")
-public class ServerPostgreSqlLoader extends RDBMSMetadataLoader {
+public class ServerPostgreSqlLoader implements MetadataLoader {
 
     private static final Pattern SERVER_NAME_PATTERN = Pattern.compile("//(.*?)/");
 
     @Override
-    public List<Metadata> loadMetadata(String query, Metadata parent, Locale locale) {
-        return getJdbcTemplate()
-            .query(query, (rs, rowNum) ->
+    public List<Metadata> loadMetadata(LoadContext loadContext) {
+        return ((JdbcTemplate) loadContext.getDatabaseClient().getClient())
+            .query(loadContext.getQuery(), (rs, rowNum) ->
                 Metadata.builder()
                     .type(MetadataType.SERVER)
                     .properties(List.of(

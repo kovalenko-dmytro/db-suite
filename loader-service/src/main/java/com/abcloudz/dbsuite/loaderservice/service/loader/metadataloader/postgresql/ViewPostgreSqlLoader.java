@@ -1,25 +1,27 @@
-package com.abcloudz.dbsuite.loaderservice.service.loader.vendor.postgresql.metadataloader;
+package com.abcloudz.dbsuite.loaderservice.service.loader.metadataloader.postgresql;
 
+import com.abcloudz.dbsuite.loaderservice.dto.loader.LoadContext;
 import com.abcloudz.dbsuite.loaderservice.model.metadata.Metadata;
 import com.abcloudz.dbsuite.loaderservice.model.metadata.MetadataProperty;
 import com.abcloudz.dbsuite.loaderservice.model.metadata.MetadataPropertyName;
 import com.abcloudz.dbsuite.loaderservice.model.metadata.MetadataType;
-import com.abcloudz.dbsuite.loaderservice.service.loader.RDBMSMetadataLoader;
+import com.abcloudz.dbsuite.loaderservice.service.loader.metadataloader.MetadataLoader;
+import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Component;
 
 import java.util.List;
-import java.util.Locale;
 
 @Component("ViewPostgreSqlLoader")
-public class ViewPostgreSqlLoader extends RDBMSMetadataLoader {
+public class ViewPostgreSqlLoader implements MetadataLoader {
 
     @Override
-    public List<Metadata> loadMetadata(String query, Metadata parent, Locale locale) {
+    public List<Metadata> loadMetadata(LoadContext loadContext) {
         Object[] params = new Object[]{
-            parent.extractProperty(MetadataType.DATABASE, MetadataPropertyName.NAME),
-            parent.extractProperty(MetadataType.SCHEMA, MetadataPropertyName.NAME)};
-        return getJdbcTemplate()
-            .query(query, (rs, rowNum) ->
+            loadContext.getParent().extractProperty(MetadataType.DATABASE, MetadataPropertyName.NAME),
+            loadContext.getParent().extractProperty(MetadataType.SCHEMA, MetadataPropertyName.NAME)};
+
+        return ((JdbcTemplate) loadContext.getDatabaseClient().getClient())
+            .query(loadContext.getQuery(), (rs, rowNum) ->
                 Metadata.builder()
                     .type(MetadataType.VIEW)
                     .properties(List.of(

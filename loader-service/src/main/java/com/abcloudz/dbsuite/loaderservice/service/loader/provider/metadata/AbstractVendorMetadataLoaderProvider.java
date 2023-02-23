@@ -1,8 +1,9 @@
-package com.abcloudz.dbsuite.loaderservice.service.loader.provider;
+package com.abcloudz.dbsuite.loaderservice.service.loader.provider.metadata;
 
 import com.abcloudz.dbsuite.loaderservice.common.message.Error;
 import com.abcloudz.dbsuite.loaderservice.model.category.MetadataCategoryType;
-import com.abcloudz.dbsuite.loaderservice.service.loader.MetadataLoader;
+import com.abcloudz.dbsuite.loaderservice.service.loader.metadataloader.MetadataLoader;
+import com.abcloudz.dbsuite.loaderservice.service.loader.provider.Provider;
 import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.ApplicationContext;
@@ -16,7 +17,7 @@ import java.util.Optional;
 
 @RequiredArgsConstructor
 @Getter
-public abstract class AbstractMetadataLoaderProvider implements MetadataLoaderProvider {
+public abstract class AbstractVendorMetadataLoaderProvider implements Provider<MetadataLoader, MetadataCategoryType> {
 
     private final ApplicationContext context;
     private final MessageSource messageSource;
@@ -25,10 +26,12 @@ public abstract class AbstractMetadataLoaderProvider implements MetadataLoaderPr
     private final Map<MetadataCategoryType, MetadataLoader> metadataLoaders = new EnumMap<>(MetadataCategoryType.class);
 
     @Override
-    public MetadataLoader getMetadataLoader(MetadataCategoryType categoryType, Locale locale) {
+    public MetadataLoader provide(MetadataCategoryType type, Locale locale) {
         return Optional
-            .ofNullable(metadataLoaders.get(categoryType))
-            .orElseThrow(() -> new UnsupportedOperationException(getMessage(categoryType, locale)));
+            .ofNullable(metadataLoaders.get(type))
+            .orElseThrow(() ->
+                new UnsupportedOperationException(
+                    messageSource.getMessage(Error.CATEGORY_UNSUPPORTED.getKey(), new Object[]{type.getType()}, locale)));
     }
 
     protected MetadataLoader getBeanByName(String beanName) {
@@ -37,9 +40,4 @@ public abstract class AbstractMetadataLoaderProvider implements MetadataLoaderPr
 
     @PostConstruct
     protected abstract void init();
-
-    private String getMessage(MetadataCategoryType categoryType, Locale locale) {
-        return messageSource
-            .getMessage(Error.CATEGORY_UNSUPPORTED.getKey(), new Object[]{categoryType.getType()}, locale);
-    }
 }

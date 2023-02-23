@@ -1,4 +1,4 @@
-package com.abcloudz.dbsuite.loaderservice.service.loader.query;
+package com.abcloudz.dbsuite.loaderservice.service.loader.provider.query;
 
 import com.abcloudz.dbsuite.loaderservice.model.category.MetadataCategoryType;
 import lombok.AllArgsConstructor;

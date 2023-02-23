@@ -23,7 +23,8 @@ public enum Error {
     CATEGORY_UNSUPPORTED("error.category.unsupported"),
     CATEGORY_ROOT_NOT_FOUND("error.category.root.not.found"),
     LOADER_METADATA_PARENT_NOT_LOADED("loader.metadata.parent.not.loaded"),
-    LOADER_QUERY_NOT_DEFINED("loader.metadata.query.not.defined");
+    LOADER_QUERY_NOT_DEFINED("loader.metadata.query.not.defined"),
+    DATABASE_CLIENT_UNSUPPORTED("database.client.unsupported");
 
     private final String key;
 }

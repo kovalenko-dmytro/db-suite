@@ -1,13 +1,12 @@
-package com.abcloudz.dbsuite.loaderservice.service.loader.vendor.postgresql.provider;
+package com.abcloudz.dbsuite.loaderservice.service.loader.provider.metadata;
 
 import com.abcloudz.dbsuite.loaderservice.model.category.MetadataCategoryType;
-import com.abcloudz.dbsuite.loaderservice.service.loader.provider.AbstractMetadataLoaderProvider;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Component;
 
-@Component
-public class PostgreSqlMetadataLoaderProvider extends AbstractMetadataLoaderProvider {
+@Component("PostgreSqlMetadataLoaderProvider")
+public class PostgreSqlMetadataLoaderProvider extends AbstractVendorMetadataLoaderProvider {
 
     public PostgreSqlMetadataLoaderProvider(ApplicationContext context, MessageSource messageSource) {
         super(context, messageSource);

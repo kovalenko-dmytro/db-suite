@@ -4,18 +4,17 @@ import com.abcloudz.dbsuite.loaderservice.client.VendorServiceClient;
 import com.abcloudz.dbsuite.loaderservice.common.Entity;
 import com.abcloudz.dbsuite.loaderservice.common.message.Error;
 import com.abcloudz.dbsuite.loaderservice.dto.connection.ConnectionResponseDTO;
+import com.abcloudz.dbsuite.loaderservice.dto.loader.LoadContext;
 import com.abcloudz.dbsuite.loaderservice.dto.metadata.LoadMetadataRequestDTO;
 import com.abcloudz.dbsuite.loaderservice.dto.metadata.MetadataResponseDTO;
 import com.abcloudz.dbsuite.loaderservice.exception.EntityNotFoundException;
 import com.abcloudz.dbsuite.loaderservice.exception.LoaderServiceApplicationException;
 import com.abcloudz.dbsuite.loaderservice.model.category.MetadataCategory;
 import com.abcloudz.dbsuite.loaderservice.model.category.MetadataCategoryType;
-import com.abcloudz.dbsuite.loaderservice.model.category.VendorType;
 import com.abcloudz.dbsuite.loaderservice.model.metadata.Metadata;
 import com.abcloudz.dbsuite.loaderservice.repository.MetadataRepository;
 import com.abcloudz.dbsuite.loaderservice.service.category.MetadataCategoryService;
-import com.abcloudz.dbsuite.loaderservice.service.loader.VendorLoader;
-import com.abcloudz.dbsuite.loaderservice.service.loader.provider.VendorLoaderProvider;
+import com.abcloudz.dbsuite.loaderservice.service.loader.ILoader;
 import com.abcloudz.dbsuite.loaderservice.util.mapper.MetadataMapper;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.MessageSource;
@@ -30,8 +29,8 @@ import java.util.stream.Collectors;
 public class MetadataServiceImpl implements MetadataService {
 
     private final VendorServiceClient vendorServiceClient;
-    private final VendorLoaderProvider vendorLoaderProvider;
     private final MetadataCategoryService metadataCategoryService;
+    private final ILoader loader;
     private final MetadataRepository metadataRepository;
     private final MessageSource messageSource;
     private final MetadataMapper metadataMapper;
@@ -60,9 +59,8 @@ public class MetadataServiceImpl implements MetadataService {
             ? null
             : getParentMetadata(request.getParentMetadataGuid(), connection.getConnectionName(), category.getType().getType(), locale);
 
-        VendorType vendorType = VendorType.getType(connection.getVendor().getType());
-        VendorLoader vendorLoader = vendorLoaderProvider.getVendorLoader(vendorType, locale);
-        List<Metadata> metadata = vendorLoader.load(connection, category, parent, locale);
+        LoadContext context = LoadContext.builder().connection(connection).category(category).parent(parent).build();
+        List<Metadata> metadata = loader.load(context, locale);
 
         return metadataRepository.saveAll(metadata).stream()
             .map(metadataMapper::toMetadataResponseDTO)
