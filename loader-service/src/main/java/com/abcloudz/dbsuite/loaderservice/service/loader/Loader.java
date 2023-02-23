@@ -12,7 +12,6 @@ import org.springframework.stereotype.Service;
 
 import java.util.List;
 import java.util.Locale;
-import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
@@ -24,23 +23,13 @@ public class Loader implements ILoader {
 
     @Override
     public List<Metadata> load(LoadContext loadContext, Locale locale) {
-        DatabaseClient<?> databaseClient = databaseClientProvider.provide(loadContext, locale);
-        loadContext.setDatabaseClient(databaseClient);
-
-        String query = queryProvider.provide(loadContext, locale);
-        loadContext.setQuery(query);
+        loadContext.setDatabaseClient(databaseClientProvider.provide(loadContext, locale));
+        loadContext.setQuery(queryProvider.provide(loadContext, locale));
 
         VendorType vendorType = VendorType.getType(loadContext.getConnection().getVendor().getType());
         Provider<MetadataLoader, MetadataCategoryType> vendorProvider = vendorLoaderProvider.provide(vendorType, locale);
         MetadataLoader metadataLoader = vendorProvider.provide(loadContext.getCategory().getType(), locale);
 
-        return metadataLoader.loadMetadata(loadContext).stream()
-            .peek(object -> {
-                object.setConnectionGuid(loadContext.getConnection().getConnectionGuid());
-                object.setCategory(loadContext.getCategory());
-                object.setParent(loadContext.getParent());
-                object.getProperties().forEach(metadataProperty -> metadataProperty.setMetadata(object));
-            })
-            .collect(Collectors.toList());
+        return metadataLoader.loadMetadata(loadContext);
     }
 }

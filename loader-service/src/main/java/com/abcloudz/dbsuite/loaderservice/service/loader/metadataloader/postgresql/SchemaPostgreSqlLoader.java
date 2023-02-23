@@ -19,10 +19,12 @@ public class SchemaPostgreSqlLoader implements MetadataLoader {
         Object[] params =
             new Object[]{loadContext.getParent().extractProperty(MetadataType.DATABASE, MetadataPropertyName.NAME)};
 
-        return ((JdbcTemplate) loadContext.getDatabaseClient().getClient())
+        List<Metadata> metadata = ((JdbcTemplate) loadContext.getDatabaseClient().getClient())
             .query(loadContext.getQuery(), (rs, rowNum) ->
                 Metadata.builder()
+                    .connectionGuid(loadContext.getConnection().getConnectionGuid())
                     .type(MetadataType.SCHEMA)
+                    .category(loadContext.getCategory())
                     .properties(List.of(
                         MetadataProperty.builder()
                             .name(MetadataPropertyName.NAME)
@@ -32,7 +34,9 @@ public class SchemaPostgreSqlLoader implements MetadataLoader {
                             .name(MetadataPropertyName.IS_SYSTEM)
                             .value(String.valueOf(rs.getBoolean("is_system")))
                             .build()))
+                    .parent(loadContext.getParent())
                     .build(),
                 params);
+        return fillPropertiesByOwner(metadata);
     }
 }

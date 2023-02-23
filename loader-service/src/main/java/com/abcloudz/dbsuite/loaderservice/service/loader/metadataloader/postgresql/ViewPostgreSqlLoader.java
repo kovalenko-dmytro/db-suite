@@ -20,10 +20,12 @@ public class ViewPostgreSqlLoader implements MetadataLoader {
             loadContext.getParent().extractProperty(MetadataType.DATABASE, MetadataPropertyName.NAME),
             loadContext.getParent().extractProperty(MetadataType.SCHEMA, MetadataPropertyName.NAME)};
 
-        return ((JdbcTemplate) loadContext.getDatabaseClient().getClient())
+        List<Metadata> metadata = ((JdbcTemplate) loadContext.getDatabaseClient().getClient())
             .query(loadContext.getQuery(), (rs, rowNum) ->
                 Metadata.builder()
+                    .connectionGuid(loadContext.getConnection().getConnectionGuid())
                     .type(MetadataType.VIEW)
+                    .category(loadContext.getCategory())
                     .properties(List.of(
                         MetadataProperty.builder()
                             .name(MetadataPropertyName.NAME)
@@ -37,7 +39,9 @@ public class ViewPostgreSqlLoader implements MetadataLoader {
                             .name(MetadataPropertyName.TEXT)
                             .value(rs.getString("text"))
                             .build()))
+                    .parent(loadContext.getParent())
                     .build(),
                 params);
+        return fillPropertiesByOwner(metadata);
     }
 }

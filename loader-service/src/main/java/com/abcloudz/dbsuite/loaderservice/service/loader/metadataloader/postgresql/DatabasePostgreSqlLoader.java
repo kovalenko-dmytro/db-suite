@@ -16,10 +16,12 @@ public class DatabasePostgreSqlLoader implements MetadataLoader {
 
     @Override
     public List<Metadata> loadMetadata(LoadContext loadContext) {
-        return ((JdbcTemplate) loadContext.getDatabaseClient().getClient())
+        List<Metadata> metadata = ((JdbcTemplate) loadContext.getDatabaseClient().getClient())
             .query(loadContext.getQuery(), (rs, rowNum) ->
                 Metadata.builder()
+                    .connectionGuid(loadContext.getConnection().getConnectionGuid())
                     .type(MetadataType.DATABASE)
+                    .category(loadContext.getCategory())
                     .properties(List.of(
                         MetadataProperty.builder()
                             .name(MetadataPropertyName.NAME)
@@ -33,6 +35,8 @@ public class DatabasePostgreSqlLoader implements MetadataLoader {
                             .name(MetadataPropertyName.DEFAULT_SCHEMA)
                             .value(rs.getString("default_schema"))
                             .build()))
+                    .parent(loadContext.getParent())
                     .build());
+        return fillPropertiesByOwner(metadata);
     }
 }

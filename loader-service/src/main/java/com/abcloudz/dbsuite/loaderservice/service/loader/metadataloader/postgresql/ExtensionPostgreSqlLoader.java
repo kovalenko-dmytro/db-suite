@@ -19,10 +19,12 @@ public class ExtensionPostgreSqlLoader implements MetadataLoader {
         Object[] params =
             new Object[]{loadContext.getParent().extractProperty(MetadataType.DATABASE, MetadataPropertyName.NAME)};
 
-        return ((JdbcTemplate) loadContext.getDatabaseClient().getClient())
+        List<Metadata> metadata = ((JdbcTemplate) loadContext.getDatabaseClient().getClient())
             .query(loadContext.getQuery(), (rs, rowNum) ->
                 Metadata.builder()
+                    .connectionGuid(loadContext.getConnection().getConnectionGuid())
                     .type(MetadataType.EXTENSION)
+                    .category(loadContext.getCategory())
                     .properties(List.of(
                         MetadataProperty.builder()
                             .name(MetadataPropertyName.EXTENSION_OWNER_ID)
@@ -40,7 +42,9 @@ public class ExtensionPostgreSqlLoader implements MetadataLoader {
                             .name(MetadataPropertyName.EXTENSION_VERSION)
                             .value(rs.getString("extversion"))
                             .build()))
+                    .parent(loadContext.getParent())
                     .build(),
                 params);
+        return fillPropertiesByOwner(metadata);
     }
 }

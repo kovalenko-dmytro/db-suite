@@ -20,10 +20,12 @@ public class ServerPostgreSqlLoader implements MetadataLoader {
 
     @Override
     public List<Metadata> loadMetadata(LoadContext loadContext) {
-        return ((JdbcTemplate) loadContext.getDatabaseClient().getClient())
+        List<Metadata> metadata = ((JdbcTemplate) loadContext.getDatabaseClient().getClient())
             .query(loadContext.getQuery(), (rs, rowNum) ->
                 Metadata.builder()
+                    .connectionGuid(loadContext.getConnection().getConnectionGuid())
                     .type(MetadataType.SERVER)
+                    .category(loadContext.getCategory())
                     .properties(List.of(
                         MetadataProperty.builder()
                             .name(MetadataPropertyName.NAME)
@@ -37,7 +39,9 @@ public class ServerPostgreSqlLoader implements MetadataLoader {
                             .name(MetadataPropertyName.UUID)
                             .value(rs.getString("uuid"))
                             .build()))
+                    .parent(loadContext.getParent())
                     .build());
+        return fillPropertiesByOwner(metadata);
     }
 
     private String getServerName(String url) {

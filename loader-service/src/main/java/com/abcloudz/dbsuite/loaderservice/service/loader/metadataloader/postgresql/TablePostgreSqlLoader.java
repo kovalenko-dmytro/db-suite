@@ -20,10 +20,12 @@ public class TablePostgreSqlLoader implements MetadataLoader {
             loadContext.getParent().extractProperty(MetadataType.DATABASE, MetadataPropertyName.NAME),
             loadContext.getParent().extractProperty(MetadataType.SCHEMA, MetadataPropertyName.NAME)};
 
-        return ((JdbcTemplate) loadContext.getDatabaseClient().getClient())
+        List<Metadata> metadata = ((JdbcTemplate) loadContext.getDatabaseClient().getClient())
             .query(loadContext.getQuery(), (rs, rowNum) ->
                 Metadata.builder()
+                    .connectionGuid(loadContext.getConnection().getConnectionGuid())
                     .type(MetadataType.TABLE)
+                    .category(loadContext.getCategory())
                     .properties(List.of(
                         MetadataProperty.builder()
                             .name(MetadataPropertyName.NAME)
@@ -33,7 +35,9 @@ public class TablePostgreSqlLoader implements MetadataLoader {
                             .name(MetadataPropertyName.TABLE_IS_TYPED)
                             .value(String.valueOf(rs.getBoolean("is_typed_table")))
                             .build()))
+                    .parent(loadContext.getParent())
                     .build(),
                 params);
+        return fillPropertiesByOwner(metadata);
     }
 }
