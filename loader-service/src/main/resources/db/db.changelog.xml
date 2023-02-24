@@ -31,30 +31,34 @@
     </changeSet>
 
     <changeSet id="db-change-set-7" author="db-suite">
-        <sqlFile path="db/sql/2023-02-08-6666_insert_table_metadata_category_postgresql.sql"/>
+        <sqlFile path="db/sql/2023-02-08-6666_create_table_metadata_category_metadata_category.sql"/>
     </changeSet>
 
     <changeSet id="db-change-set-8" author="db-suite">
-        <sqlFile path="db/sql/2023-02-09-0000_create_type_metadata_type.sql"/>
+        <sqlFile path="db/sql/2023-02-08-7777_insert_table_metadata_category_postgresql.sql"/>
     </changeSet>
 
     <changeSet id="db-change-set-9" author="db-suite">
-        <sqlFile path="db/sql/2023-02-09-1111_create_type_metadata_property_name.sql"/>
+        <sqlFile path="db/sql/2023-02-09-0000_create_type_metadata_type.sql"/>
     </changeSet>
 
     <changeSet id="db-change-set-10" author="db-suite">
-        <sqlFile path="db/sql/2023-02-09-2222_create_cast_metadata_type.sql"/>
+        <sqlFile path="db/sql/2023-02-09-1111_create_type_metadata_property_name.sql"/>
     </changeSet>
 
     <changeSet id="db-change-set-11" author="db-suite">
-        <sqlFile path="db/sql/2023-02-09-3333_create_cast_metadata_property_name.sql"/>
+        <sqlFile path="db/sql/2023-02-09-2222_create_cast_metadata_type.sql"/>
     </changeSet>
 
     <changeSet id="db-change-set-12" author="db-suite">
-        <sqlFile path="db/sql/2023-02-09-4444_create_table_metadata.sql"/>
+        <sqlFile path="db/sql/2023-02-09-3333_create_cast_metadata_property_name.sql"/>
     </changeSet>
 
     <changeSet id="db-change-set-13" author="db-suite">
+        <sqlFile path="db/sql/2023-02-09-4444_create_table_metadata.sql"/>
+    </changeSet>
+
+    <changeSet id="db-change-set-14" author="db-suite">
         <sqlFile path="db/sql/2023-02-09-5555_create_table_metadata_property.sql"/>
     </changeSet>
 

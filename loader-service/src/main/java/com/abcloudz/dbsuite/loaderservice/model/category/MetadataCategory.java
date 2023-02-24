@@ -2,9 +2,9 @@ package com.abcloudz.dbsuite.loaderservice.model.category;
 
 import com.abcloudz.dbsuite.loaderservice.model.version.Version;
 import lombok.*;
-import org.hibernate.annotations.Fetch;
-import org.hibernate.annotations.FetchMode;
 import org.hibernate.annotations.GenericGenerator;
+import org.hibernate.annotations.LazyCollection;
+import org.hibernate.annotations.LazyCollectionOption;
 
 import javax.persistence.*;
 import java.time.LocalDateTime;
@@ -13,13 +13,12 @@ import java.util.List;
 
 @Entity
 @Table(name = "metadata_category",
-       uniqueConstraints = {@UniqueConstraint(columnNames = {"type", "vendor", "parent_"})})
+       uniqueConstraints = {@UniqueConstraint(columnNames = {"type", "vendor"})})
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Getter
 @Setter
-@EqualsAndHashCode(exclude="parent")
 public class MetadataCategory {
 
     @Id
@@ -37,18 +36,22 @@ public class MetadataCategory {
     @Column(name = "vendor", nullable = false)
     private VendorType vendorType;
 
-    @ManyToOne
-    @JoinColumn(name = "parent_")
-    private MetadataCategory parent;
-
     @Column(name = "version_from", nullable = false)
     private Version versionFrom;
 
     @Column(name = "added_at", nullable = false)
     private LocalDateTime addedAt;
 
-    @OneToMany(mappedBy = "parent", fetch = FetchType.EAGER, cascade = CascadeType.ALL, orphanRemoval = true)
-    @Fetch(FetchMode.SELECT)
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(
+        name = "metadata_category_metadata_category",
+        joinColumns = @JoinColumn(name = "metadata_category_"),
+        inverseJoinColumns = @JoinColumn(name = "parent_"))
+    @LazyCollection(LazyCollectionOption.FALSE)
+    private List<MetadataCategory> parentCategories = new ArrayList<>();
+
+    @ManyToMany(cascade = CascadeType.ALL, mappedBy="parentCategories")
+    @LazyCollection(LazyCollectionOption.FALSE)
     private List<MetadataCategory> subCategories = new ArrayList<>();
 
     @Override
@@ -72,10 +75,6 @@ public class MetadataCategory {
         if (vendorType != null) {
             builder.append("vendorType = ");
             builder.append(vendorType.getVendorType()).append(", ");
-        }
-        if (parent != null) {
-            builder.append("parent = ");
-            builder.append(parent.getMetadataCategoryGuid()).append(", ");
         }
         if (versionFrom != null) {
             builder.append("versionFrom = ");

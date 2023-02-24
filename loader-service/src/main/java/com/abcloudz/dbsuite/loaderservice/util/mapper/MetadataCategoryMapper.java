@@ -7,7 +7,6 @@ import com.abcloudz.dbsuite.loaderservice.model.category.VendorType;
 import com.abcloudz.dbsuite.loaderservice.model.version.Version;
 import org.mapstruct.InjectionStrategy;
 import org.mapstruct.Mapper;
-import org.mapstruct.Mapping;
 
 import java.util.Collections;
 import java.util.List;
@@ -17,7 +16,6 @@ import java.util.stream.Collectors;
 @Mapper(componentModel = "spring", injectionStrategy = InjectionStrategy.CONSTRUCTOR)
 public interface MetadataCategoryMapper {
 
-    @Mapping(target = "parent", source = "parent.metadataCategoryGuid")
     MetadataCategoryResponseDTO toMetadataCategoryResponseDTO(MetadataCategory category);
 
     default String metadataCategoryTypeToString(MetadataCategoryType type) {
@@ -42,7 +40,6 @@ public interface MetadataCategoryMapper {
                 .type(category.getType().getType())
                 .root(category.isRoot())
                 .vendorType(category.getVendorType().getVendorType())
-                .parent(category.getParent().getMetadataCategoryGuid())
                 .versionFrom(category.getVersionFrom().toString())
                 .addedAt(category.getAddedAt())
                 .subCategories(Collections.emptyList())

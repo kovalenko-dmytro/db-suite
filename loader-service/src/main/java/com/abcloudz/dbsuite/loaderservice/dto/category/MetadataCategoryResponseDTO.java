@@ -18,7 +18,6 @@ public class MetadataCategoryResponseDTO {
     private String type;
     private boolean root;
     private String vendorType;
-    private String parent;
     private String versionFrom;
     private LocalDateTime addedAt;
     private List<MetadataCategoryResponseDTO> subCategories;
