@@ -19,7 +19,11 @@ public enum MetadataPropertyName {
     EXTENSION_VERSION("extension_version"),
     TABLE_IS_TYPED("is_typed_table"),
     IS_UPDATABLE("is_updatable"),
-    TEXT("text");
+    TEXT("text"),
+    HAS_INDEXES("has_indexes"),
+    IS_AGGREGATE("is_aggregate"),
+    IS_TRIGGER_FUNCTION("is_trigger_function"),
+    RETURN_TYPE("return_type");
 
     private final String name;
 }

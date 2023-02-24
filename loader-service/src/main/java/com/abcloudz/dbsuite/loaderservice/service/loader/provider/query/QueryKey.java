@@ -4,47 +4,39 @@ import com.abcloudz.dbsuite.loaderservice.model.category.MetadataCategoryType;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 
+import java.util.Arrays;
+
 @AllArgsConstructor
 @Getter
 public enum QueryKey {
 
-    SERVER("metadata.query.server"),
-    DATABASE("metadata.query.database"),
-    SCHEMA("metadata.query.schema"),
-    EXTENSION("metadata.query.extension"),
-    TABLE("metadata.query.table"),
-    VIEW("metadata.query.view"),
-    MATERIALIZED_VIEW("metadata.query.materialized-view"),
-    COLUMN("metadata.query.column"),
-    TRIGGER("metadata.query.trigger"),
-    PROCEDURE("metadata.query.procedure"),
-    FUNCTION("metadata.query.function"),
-    PARAMETER("metadata.query.parameter"),
-    SEQUENCE("metadata.query.sequence"),
-    INDEX("metadata.query.index"),
-    CHECK_CONSTRAINT("metadata.query.check-constraint"),
-    FOREIGN_KEY("metadata.query.foreign-key"),
-    UNIQUE_KEY("metadata.query.unique-key"),
-    PRIMARY_KEY("metadata.query.primary-key");
+    SERVER(MetadataCategoryType.SERVERS, "metadata.query.server"),
+    DATABASE(MetadataCategoryType.DATABASES, "metadata.query.database"),
+    SCHEMA(MetadataCategoryType.SCHEMAS, "metadata.query.schema"),
+    EXTENSION(MetadataCategoryType.EXTENSIONS, "metadata.query.extension"),
+    TABLE(MetadataCategoryType.TABLES, "metadata.query.table"),
+    VIEW(MetadataCategoryType.VIEWS, "metadata.query.view"),
+    MATERIALIZED_VIEW(MetadataCategoryType.MATERIALIZED_VIEWS, "metadata.query.materialized-view"),
+    COLUMN(MetadataCategoryType.COLUMNS, "metadata.query.column"),
+    TRIGGER(MetadataCategoryType.TRIGGERS, "metadata.query.trigger"),
+    PROCEDURE(MetadataCategoryType.PROCEDURES, "metadata.query.procedure"),
+    FUNCTION(MetadataCategoryType.FUNCTIONS, "metadata.query.function"),
+    AGGREGATE_FUNCTION(MetadataCategoryType.AGGREGATE_FUNCTIONS, "metadata.query.aggregate-function"),
+    PARAMETER(MetadataCategoryType.PARAMETERS, "metadata.query.parameter"),
+    SEQUENCE(MetadataCategoryType.SEQUENCES, "metadata.query.sequence"),
+    INDEX(MetadataCategoryType.INDEXES, "metadata.query.index"),
+    CHECK_CONSTRAINT(MetadataCategoryType.CHECK_CONSTRAINTS, "metadata.query.check-constraint"),
+    FOREIGN_KEY(MetadataCategoryType.FOREIGN_KEYS, "metadata.query.foreign-key"),
+    UNIQUE_KEY(MetadataCategoryType.UNIQUE_KEYS, "metadata.query.unique-key"),
+    PRIMARY_KEY(MetadataCategoryType.PRIMARY_KEYS, "metadata.query.primary-key");
 
+    private final MetadataCategoryType categoryType;
     private final String key;
 
     public static QueryKey obtainQueryKey(MetadataCategoryType type) {
-        switch (type) {
-            case SERVERS:
-                return SERVER;
-            case DATABASES:
-                return DATABASE;
-            case SCHEMAS:
-                return SCHEMA;
-            case EXTENSIONS:
-                return EXTENSION;
-            case TABLES:
-                return TABLE;
-            case VIEWS:
-                return VIEW;
-            default:
-                throw new UnsupportedOperationException();
-        }
+        return Arrays.stream(QueryKey.values())
+            .filter(queryKey -> queryKey.getCategoryType().equals(type))
+            .findFirst()
+            .orElseThrow(() -> new IllegalArgumentException("Query key for category type <" + type + "> not found"));
     }
 }

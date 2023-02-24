@@ -11,4 +11,8 @@ CREATE TYPE metadata_property_name AS ENUM (
 'extension_version',
 'is_typed_table',
 'is_updatable',
-'text');
+'text',
+'has_indexes',
+'is_aggregate',
+'is_trigger_function',
+'return_type');
