@@ -15,4 +15,16 @@ CREATE TYPE metadata_property_name AS ENUM (
 'has_indexes',
 'is_aggregate',
 'is_trigger_function',
-'return_type');
+'return_type',
+'is_udt',
+'type_name',
+'start_value',
+'last_value',
+'minimum_value',
+'character_maximum_length',
+'increment',
+'numeric_precision',
+'numeric_scale',
+'cycle_option',
+'cache_flag',
+'cache_size');

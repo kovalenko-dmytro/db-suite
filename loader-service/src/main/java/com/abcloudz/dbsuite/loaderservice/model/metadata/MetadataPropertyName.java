@@ -23,7 +23,19 @@ public enum MetadataPropertyName {
     HAS_INDEXES("has_indexes"),
     IS_AGGREGATE("is_aggregate"),
     IS_TRIGGER_FUNCTION("is_trigger_function"),
-    RETURN_TYPE("return_type");
+    RETURN_TYPE("return_type"),
+    IS_UDT("is_udt"),
+    TYPE_NAME("type_name"),
+    START_VALUE("start_value"),
+    LAST_VALUE("last_value"),
+    MINIMUM_VALUE("minimum_value"),
+    CHARACTER_MAXIMUM_LENGTH("character_maximum_length"),
+    INCREMENT("increment"),
+    NUMERIC_PRECISION("numeric_precision"),
+    NUMERIC_SCALE("numeric_scale"),
+    CYCLE_OPTION("cycle_option"),
+    CACHE_FLAG("cache_flag"),
+    CACHE_SIZE("cache_size");
 
     private final String name;
 }
