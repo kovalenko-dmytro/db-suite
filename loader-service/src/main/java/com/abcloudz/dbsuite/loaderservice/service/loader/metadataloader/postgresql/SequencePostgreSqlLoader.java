@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component("SecuencePostgreSqlLoader")
-public class SecuencePostgreSqlLoader implements MetadataLoader {
+@Component("SequencePostgreSqlLoader")
+public class SequencePostgreSqlLoader implements MetadataLoader {
 
     @Override
     public List<Metadata> loadMetadata(LoadContext loadContext) {
