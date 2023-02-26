@@ -11,8 +11,8 @@ import org.springframework.stereotype.Component;
 
 import java.util.List;
 
-@Component("SequencePostgreSqlLoader")
-public class SequencePostgreSqlLoader implements MetadataLoader {
+@Component("UserDefinedTypePostgreSqlLoader")
+public class UserDefinedTypePostgreSqlLoader implements MetadataLoader {
 
     @Override
     public List<Metadata> loadMetadata(LoadContext loadContext) {
@@ -24,7 +24,7 @@ public class SequencePostgreSqlLoader implements MetadataLoader {
             .query(loadContext.getQuery(), (rs, rowNum) ->
                 Metadata.builder()
                     .connectionGuid(loadContext.getConnection().getConnectionGuid())
-                    .type(MetadataType.SEQUENCE)
+                    .type(MetadataType.USER_DEFINED_TYPE)
                     .category(loadContext.getCategory())
                     .properties(List.of(
                         MetadataProperty.builder()
@@ -32,22 +32,16 @@ public class SequencePostgreSqlLoader implements MetadataLoader {
                             .value(rs.getString("name"))
                             .build(),
                         MetadataProperty.builder()
-                            .name(MetadataPropertyName.IS_UDT)
-                            .value(String.valueOf(rs.getBoolean("is_udt")))
-                            .build(),
-                        MetadataProperty.builder()
                             .name(MetadataPropertyName.TYPE_NAME)
                             .value(rs.getString("type_name"))
                             .build(),
                         MetadataProperty.builder()
-                            .name(MetadataPropertyName.START_VALUE)
-                            .value(rs.getBigDecimal("start_value") == null
-                                ? null : String.valueOf(rs.getBigDecimal("start_value")))
+                            .name(MetadataPropertyName.UDT_NAME)
+                            .value(rs.getString("udt_name"))
                             .build(),
                         MetadataProperty.builder()
-                            .name(MetadataPropertyName.MINIMUM_VALUE)
-                            .value(rs.getBigDecimal("minimum_value") == null
-                                ? null : String.valueOf(rs.getBigDecimal("minimum_value")))
+                            .name(MetadataPropertyName.UDT_SCHEMA)
+                            .value(rs.getString("udt_schema"))
                             .build(),
                         MetadataProperty.builder()
                             .name(MetadataPropertyName.CHARACTER_MAXIMUM_LENGTH)
@@ -55,9 +49,12 @@ public class SequencePostgreSqlLoader implements MetadataLoader {
                                 ? null : String.valueOf(rs.getBigDecimal("character_maximum_length")))
                             .build(),
                         MetadataProperty.builder()
-                            .name(MetadataPropertyName.INCREMENT)
-                            .value(rs.getBigDecimal("increment") == null
-                                ? null : String.valueOf(rs.getBigDecimal("increment")))
+                            .name(MetadataPropertyName.IS_UDT)
+                            .value(String.valueOf(rs.getBoolean("is_udt")))
+                            .build(),
+                        MetadataProperty.builder()
+                            .name(MetadataPropertyName.DOMAIN_SCHEMA)
+                            .value(rs.getString("domain_schema"))
                             .build(),
                         MetadataProperty.builder()
                             .name(MetadataPropertyName.NUMERIC_PRECISION)
@@ -70,24 +67,17 @@ public class SequencePostgreSqlLoader implements MetadataLoader {
                                 ? null : String.valueOf(rs.getBigDecimal("numeric_scale")))
                             .build(),
                         MetadataProperty.builder()
-                            .name(MetadataPropertyName.CYCLE_OPTION)
-                            .value(String.valueOf(rs.getBoolean("cycle_option")))
+                            .name(MetadataPropertyName.ALLOW_NULLS)
+                            .value(String.valueOf(rs.getBoolean("allow_nulls")))
                             .build(),
                         MetadataProperty.builder()
-                            .name(MetadataPropertyName.CACHE_FLAG)
-                            .value(String.valueOf(rs.getBoolean("cache_flag")))
+                            .name(MetadataPropertyName.IS_DOMAIN)
+                            .value(String.valueOf(rs.getBoolean("is_domain")))
                             .build(),
                         MetadataProperty.builder()
-                            .name(MetadataPropertyName.CACHE_SIZE)
-                            .value(rs.getBigDecimal("cache_size") == null
-                                ? null : String.valueOf(rs.getBigDecimal("cache_size")))
-                            .build(),
-                        MetadataProperty.builder()
-                            .name(MetadataPropertyName.LAST_VALUE)
-                            .value(rs.getBigDecimal("last_value") == null
-                                ? null : String.valueOf(rs.getBigDecimal("last_value")))
-                            .build()
-                        ))
+                            .name(MetadataPropertyName.IS_TYPE_ENUM)
+                            .value(String.valueOf(rs.getBoolean("is_type_enum")))
+                            .build()))
                     .parent(loadContext.getParent())
                     .build(),
                 params);

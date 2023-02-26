@@ -35,7 +35,13 @@ public enum MetadataPropertyName {
     NUMERIC_SCALE("numeric_scale"),
     CYCLE_OPTION("cycle_option"),
     CACHE_FLAG("cache_flag"),
-    CACHE_SIZE("cache_size");
+    CACHE_SIZE("cache_size"),
+    UDT_NAME("udt_name"),
+    UDT_SCHEMA("udt_schema"),
+    DOMAIN_SCHEMA("domain_schema"),
+    ALLOW_NULLS("allow_nulls"),
+    IS_DOMAIN("is_domain"),
+    IS_TYPE_ENUM("is_type_enum");
 
     private final String name;
 }

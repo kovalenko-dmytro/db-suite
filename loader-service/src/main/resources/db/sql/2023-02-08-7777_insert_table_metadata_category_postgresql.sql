@@ -30,14 +30,11 @@ INSERT INTO metadata_category_metadata_category (metadata_category_, parent_) VA
 INSERT INTO metadata_category (type, root, vendor) VALUES ('Sequences', false, 'PostgreSql');
 INSERT INTO metadata_category_metadata_category (metadata_category_, parent_) VALUES ((SELECT metadata_category_ FROM metadata_category WHERE type = 'Sequences'), (SELECT metadata_category_ FROM metadata_category WHERE type = 'Schemas'));
 
-INSERT INTO metadata_category (type, root, vendor) VALUES ('UDT aliases', false, 'PostgreSql');
-INSERT INTO metadata_category_metadata_category (metadata_category_, parent_) VALUES ((SELECT metadata_category_ FROM metadata_category WHERE type = 'UDT aliases'), (SELECT metadata_category_ FROM metadata_category WHERE type = 'Schemas'));
+INSERT INTO metadata_category (type, root, vendor) VALUES ('User defined types', false, 'PostgreSql');
+INSERT INTO metadata_category_metadata_category (metadata_category_, parent_) VALUES ((SELECT metadata_category_ FROM metadata_category WHERE type = 'User defined types'), (SELECT metadata_category_ FROM metadata_category WHERE type = 'Schemas'));
 
-INSERT INTO metadata_category (type, root, vendor) VALUES ('UDT tables', false, 'PostgreSql');
-INSERT INTO metadata_category_metadata_category (metadata_category_, parent_) VALUES ((SELECT metadata_category_ FROM metadata_category WHERE type = 'UDT tables'), (SELECT metadata_category_ FROM metadata_category WHERE type = 'Schemas'));
-
-INSERT INTO metadata_category (type, root, vendor) VALUES ('UDT enums', false, 'PostgreSql');
-INSERT INTO metadata_category_metadata_category (metadata_category_, parent_) VALUES ((SELECT metadata_category_ FROM metadata_category WHERE type = 'UDT enums'), (SELECT metadata_category_ FROM metadata_category WHERE type = 'Schemas'));
+INSERT INTO metadata_category (type, root, vendor, version_from) VALUES ('Partitions', false, 'PostgreSql', '10.0');
+INSERT INTO metadata_category_metadata_category (metadata_category_, parent_) VALUES ((SELECT metadata_category_ FROM metadata_category WHERE type = 'Partitions'), (SELECT metadata_category_ FROM metadata_category WHERE type = 'Tables'));
 
 INSERT INTO metadata_category (type, root, vendor) VALUES ('Columns', false, 'PostgreSql');
 INSERT INTO metadata_category_metadata_category (metadata_category_, parent_) VALUES ((SELECT metadata_category_ FROM metadata_category WHERE type = 'Columns'), (SELECT metadata_category_ FROM metadata_category WHERE type = 'Tables'));
@@ -63,7 +60,7 @@ INSERT INTO metadata_category_metadata_category (metadata_category_, parent_) VA
 
 INSERT INTO metadata_category (type, root, vendor) VALUES ('Check constraints', false, 'PostgreSql');
 INSERT INTO metadata_category_metadata_category (metadata_category_, parent_) VALUES ((SELECT metadata_category_ FROM metadata_category WHERE type = 'Check constraints'), (SELECT metadata_category_ FROM metadata_category WHERE type = 'Tables'));
-INSERT INTO metadata_category_metadata_category (metadata_category_, parent_) VALUES ((SELECT metadata_category_ FROM metadata_category WHERE type = 'Check constraints'), (SELECT metadata_category_ FROM metadata_category WHERE type = 'UDT aliases'));
+INSERT INTO metadata_category_metadata_category (metadata_category_, parent_) VALUES ((SELECT metadata_category_ FROM metadata_category WHERE type = 'Check constraints'), (SELECT metadata_category_ FROM metadata_category WHERE type = 'User defined types'));
 
 INSERT INTO metadata_category (type, root, vendor) VALUES ('Parameters', false, 'PostgreSql');
 INSERT INTO metadata_category_metadata_category (metadata_category_, parent_) VALUES ((SELECT metadata_category_ FROM metadata_category WHERE type = 'Parameters'), (SELECT metadata_category_ FROM metadata_category WHERE type = 'Procedures'));

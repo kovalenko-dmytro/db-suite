@@ -24,6 +24,8 @@ public enum QueryKey {
     AGGREGATE_FUNCTION(MetadataCategoryType.AGGREGATE_FUNCTIONS, "metadata.query.aggregate-function"),
     PARAMETER(MetadataCategoryType.PARAMETERS, "metadata.query.parameter"),
     SEQUENCE(MetadataCategoryType.SEQUENCES, "metadata.query.sequence"),
+    USER_DEFINED_TYPE(MetadataCategoryType.USER_DEFINED_TYPES, "metadata.query.udt"),
+    PARTITION(MetadataCategoryType.PARTITIONS, "metadata.query.partition"),
     INDEX(MetadataCategoryType.INDEXES, "metadata.query.index"),
     CHECK_CONSTRAINT(MetadataCategoryType.CHECK_CONSTRAINTS, "metadata.query.check-constraint"),
     FOREIGN_KEY(MetadataCategoryType.FOREIGN_KEYS, "metadata.query.foreign-key"),

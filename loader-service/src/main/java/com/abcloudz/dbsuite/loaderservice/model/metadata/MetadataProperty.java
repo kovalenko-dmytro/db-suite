@@ -28,7 +28,7 @@ public class MetadataProperty {
     @Column(name = "property_name", nullable = false)
     private MetadataPropertyName name;
 
-    @Column(name = "property_value", nullable = false)
+    @Column(name = "property_value")
     private String value;
 
     @ManyToOne

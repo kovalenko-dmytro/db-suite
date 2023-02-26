@@ -27,4 +27,10 @@ CREATE TYPE metadata_property_name AS ENUM (
 'numeric_scale',
 'cycle_option',
 'cache_flag',
-'cache_size');
+'cache_size',
+'udt_name',
+'udt_schema',
+'domain_schema',
+'allow_nulls',
+'is_domain',
+'is_type_enum');

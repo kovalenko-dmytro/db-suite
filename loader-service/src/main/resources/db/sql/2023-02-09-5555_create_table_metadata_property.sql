@@ -1,7 +1,7 @@
 CREATE TABLE public.metadata_property (
     metadata_property_  char(36) DEFAULT uuid_generate_v4() NOT NULL,
     property_name       metadata_property_name              NOT NULL,
-    property_value      varchar(255)                        NOT NULL,
+    property_value      varchar(255),
     metadata_           char(36)                            NOT NULL,
     added_at            timestamp without time zone DEFAULT (now()):: timestamp (0) without time zone NOT NULL,
     CONSTRAINT metadata_property_pkey PRIMARY KEY (metadata_property_),
