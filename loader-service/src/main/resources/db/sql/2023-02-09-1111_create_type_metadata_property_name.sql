@@ -33,4 +33,6 @@ CREATE TYPE metadata_property_name AS ENUM (
 'domain_schema',
 'allow_nulls',
 'is_domain',
-'is_type_enum');
+'is_type_enum',
+'partition_type',
+'partition_columns');

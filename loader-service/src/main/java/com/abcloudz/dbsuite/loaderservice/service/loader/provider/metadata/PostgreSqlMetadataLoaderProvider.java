@@ -26,5 +26,6 @@ public class PostgreSqlMetadataLoaderProvider extends AbstractVendorMetadataLoad
         getMetadataLoaders().put(MetadataCategoryType.AGGREGATE_FUNCTIONS, getBeanByName("AggregateFunctionPostgreSqlLoader"));
         getMetadataLoaders().put(MetadataCategoryType.SEQUENCES, getBeanByName("SequencePostgreSqlLoader"));
         getMetadataLoaders().put(MetadataCategoryType.USER_DEFINED_TYPES, getBeanByName("UserDefinedTypePostgreSqlLoader"));
+        getMetadataLoaders().put(MetadataCategoryType.PARTITIONS, getBeanByName("PartitionPostgreSqlLoader"));
     }
 }

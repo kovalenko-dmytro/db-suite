@@ -41,7 +41,9 @@ public enum MetadataPropertyName {
     DOMAIN_SCHEMA("domain_schema"),
     ALLOW_NULLS("allow_nulls"),
     IS_DOMAIN("is_domain"),
-    IS_TYPE_ENUM("is_type_enum");
+    IS_TYPE_ENUM("is_type_enum"),
+    PARTITION_TYPE("partition_type"),
+    PARTITION_COLUMNS("partition_columns");
 
     private final String name;
 }

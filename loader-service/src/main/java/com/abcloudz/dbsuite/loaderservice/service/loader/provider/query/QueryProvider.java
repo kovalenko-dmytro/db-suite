@@ -48,8 +48,13 @@ public class QueryProvider implements Provider<String, LoadContext> {
         Version serverVersion = Objects.isNull(context.getParent())
             ? obtainServerVersion(context.getDatabaseClient(), context.getConnection().getConnectionName(), locale)
             : context.getParent().getServerVersion();
-        List<String> filteredResourceVersions = filterResourceVersions(vendorResourceVersions, serverVersion);
+        if (serverVersion.compareTo(context.getCategory().getVersionFrom()) < 0) {
+            throw new LoaderServiceApplicationException(
+                messageSource.getMessage(Error.CATEGORY_VERSION_UNSUPPORTED.getKey(),
+                    new Object[]{context.getCategory().getType().getType(), serverVersion}, locale));
+        }
 
+        List<String> filteredResourceVersions = filterResourceVersions(vendorResourceVersions, serverVersion);
         QueryKey queryKey = QueryKey.obtainQueryKey(context.getCategory().getType());
         return findQuery(vendorType, queryKey, filteredResourceVersions, locale);
     }
