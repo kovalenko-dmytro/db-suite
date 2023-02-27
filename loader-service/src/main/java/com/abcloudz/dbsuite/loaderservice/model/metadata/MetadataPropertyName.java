@@ -43,7 +43,15 @@ public enum MetadataPropertyName {
     IS_DOMAIN("is_domain"),
     IS_TYPE_ENUM("is_type_enum"),
     PARTITION_TYPE("partition_type"),
-    PARTITION_COLUMNS("partition_columns");
+    PARTITION_COLUMNS("partition_columns"),
+    TYPE_NAME_ALIAS("type_name_alias"),
+    IS_IDENTITY("is_identity"),
+    IS_NULLABLE("is_nullable"),
+    IS_GENERATED("is_generated"),
+    IDENTITY_OPTION("identity_option"),
+    COLUMN_DEFAULT("column_default"),
+    ORDINAL_POSITION("ordinal_position"),
+    COLLATION_NAME("collation_name");
 
     private final String name;
 }
