@@ -1,6 +1,5 @@
-package com.abcloudz.dbsuite.vendorservice.dto.connection;
+package com.abcloudz.dbsuite.loaderservice.dto.connection;
 
-import com.abcloudz.dbsuite.vendorservice.dto.vendor.VendorResponseDTO;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
