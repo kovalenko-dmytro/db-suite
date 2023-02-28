@@ -1,0 +1,1 @@
+INSERT INTO public."role" (role) VALUES ('ADMIN'), ('USER');

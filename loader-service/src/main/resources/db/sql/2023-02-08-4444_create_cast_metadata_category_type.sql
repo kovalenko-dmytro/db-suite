@@ -1,0 +1,1 @@
+CREATE CAST (varchar AS metadata_category_type) WITH INOUT AS IMPLICIT;

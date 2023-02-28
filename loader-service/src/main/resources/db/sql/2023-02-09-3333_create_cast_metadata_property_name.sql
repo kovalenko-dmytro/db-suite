@@ -1,0 +1,1 @@
+CREATE CAST (varchar AS metadata_property_name) WITH INOUT AS IMPLICIT;

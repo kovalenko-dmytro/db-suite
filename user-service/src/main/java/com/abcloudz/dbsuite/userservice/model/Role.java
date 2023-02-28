@@ -4,6 +4,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.annotations.GenericGenerator;
 
 import javax.persistence.*;
 
@@ -16,10 +17,10 @@ import javax.persistence.*;
 public class Role {
 
     @Id
-    @Column(name = "role_", unique = true, nullable = false)
-    @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "role_seqGen")
-    @SequenceGenerator(name = "role_seqGen", sequenceName = "role_role__seq", allocationSize = 1)
-    private Long roleId;
+    @GeneratedValue(generator = "uuid")
+    @GenericGenerator(name = "uuid", strategy = "uuid2")
+    @Column(name = "role_", columnDefinition = "bpchar", unique = true, nullable = false)
+    private String roleGuid;
 
     @Enumerated(EnumType.STRING)
     @Column(name = "role", nullable = false)

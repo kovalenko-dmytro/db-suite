@@ -1,0 +1,1 @@
+CREATE CAST (varchar AS vendor_type) WITH INOUT AS IMPLICIT;
