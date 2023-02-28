@@ -14,6 +14,7 @@ CREATE TYPE metadata_category_type AS ENUM(
     'Partitions',
     'Columns',
     'Indexes',
+    'Index columns',
     'Triggers',
     'Parameters',
     'Primary keys',

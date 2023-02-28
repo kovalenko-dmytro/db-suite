@@ -27,6 +27,7 @@ public enum QueryKey {
     USER_DEFINED_TYPE(MetadataCategoryType.USER_DEFINED_TYPES, "metadata.query.udt"),
     PARTITION(MetadataCategoryType.PARTITIONS, "metadata.query.partition"),
     INDEX(MetadataCategoryType.INDEXES, "metadata.query.index"),
+    INDEX_COLUMN(MetadataCategoryType.INDEX_COLUMNS, "metadata.query.index-column"),
     CHECK_CONSTRAINT(MetadataCategoryType.CHECK_CONSTRAINTS, "metadata.query.check-constraint"),
     FOREIGN_KEY(MetadataCategoryType.FOREIGN_KEYS, "metadata.query.foreign-key"),
     UNIQUE_KEY(MetadataCategoryType.UNIQUE_KEYS, "metadata.query.unique-key"),

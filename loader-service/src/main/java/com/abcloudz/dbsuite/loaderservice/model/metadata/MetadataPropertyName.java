@@ -51,7 +51,17 @@ public enum MetadataPropertyName {
     IDENTITY_OPTION("identity_option"),
     COLUMN_DEFAULT("column_default"),
     ORDINAL_POSITION("ordinal_position"),
-    COLLATION_NAME("collation_name");
+    COLLATION_NAME("collation_name"),
+    INDEX_IS_READY("index_is_ready"),
+    INDEX_TYPE("index_type"),
+    IS_CLUSTERED("is_clustered"),
+    IS_FUNCTION_BASED("is_function_based"),
+    IS_UNIQUE("is_unique"),
+    IS_VALID("is_valid"),
+    R_OPTIONS("r_options"),
+    ORDER_COLUMN("order_column"),
+    ORDER_BY("order_by"),
+    NULLS("nulls");
 
     private final String name;
 }

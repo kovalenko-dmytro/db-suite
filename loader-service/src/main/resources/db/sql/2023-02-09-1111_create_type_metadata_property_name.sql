@@ -43,4 +43,14 @@ CREATE TYPE metadata_property_name AS ENUM (
 'identity_option',
 'column_default',
 'ordinal_position',
-'collation_name');
+'collation_name',
+'index_is_ready',
+'index_type',
+'is_clustered',
+'is_function_based',
+'is_unique',
+'is_valid',
+'r_options',
+'order_column',
+'order_by',
+'nulls');

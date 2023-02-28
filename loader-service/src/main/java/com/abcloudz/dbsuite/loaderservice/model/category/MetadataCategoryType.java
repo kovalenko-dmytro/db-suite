@@ -22,6 +22,7 @@ public enum MetadataCategoryType {
     PARTITIONS("Partitions"),
     COLUMNS("Columns"),
     INDEXES("Indexes"),
+    INDEX_COLUMNS("Index columns"),
     TRIGGERS("Triggers"),
     PARAMETERS("Parameters"),
     PRIMARY_KEYS("Primary keys"),

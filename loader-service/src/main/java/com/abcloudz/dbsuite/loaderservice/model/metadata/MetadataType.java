@@ -13,6 +13,7 @@ public enum MetadataType {
     TABLE("TABLE"),
     COLUMN("COLUMN"),
     INDEX("INDEX"),
+    INDEX_COLUMN("INDEX_COLUMN"),
     PRIMARY_KEY("PRIMARY_KEY"),
     UNIQUE_KEY("UNIQUE_KEY"),
     FOREIGN_KEY("FOREIGN_KEY"),

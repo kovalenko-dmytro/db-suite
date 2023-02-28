@@ -45,6 +45,9 @@ INSERT INTO metadata_category (type, root, vendor) VALUES ('Indexes', false, 'Po
 INSERT INTO metadata_category_metadata_category (metadata_category_, parent_) VALUES ((SELECT metadata_category_ FROM metadata_category WHERE type = 'Indexes'), (SELECT metadata_category_ FROM metadata_category WHERE type = 'Tables'));
 INSERT INTO metadata_category_metadata_category (metadata_category_, parent_) VALUES ((SELECT metadata_category_ FROM metadata_category WHERE type = 'Indexes'), (SELECT metadata_category_ FROM metadata_category WHERE type = 'Materialized views'));
 
+INSERT INTO metadata_category (type, root, vendor) VALUES ('Index columns', false, 'PostgreSql');
+INSERT INTO metadata_category_metadata_category (metadata_category_, parent_) VALUES ((SELECT metadata_category_ FROM metadata_category WHERE type = 'Index columns'), (SELECT metadata_category_ FROM metadata_category WHERE type = 'Indexes'));
+
 INSERT INTO metadata_category (type, root, vendor) VALUES ('Triggers', false, 'PostgreSql');
 INSERT INTO metadata_category_metadata_category (metadata_category_, parent_) VALUES ((SELECT metadata_category_ FROM metadata_category WHERE type = 'Triggers'), (SELECT metadata_category_ FROM metadata_category WHERE type = 'Tables'));
 INSERT INTO metadata_category_metadata_category (metadata_category_, parent_) VALUES ((SELECT metadata_category_ FROM metadata_category WHERE type = 'Triggers'), (SELECT metadata_category_ FROM metadata_category WHERE type = 'Views'));
