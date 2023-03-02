@@ -31,7 +31,8 @@ public enum QueryKey {
     CHECK_CONSTRAINT(MetadataCategoryType.CHECK_CONSTRAINTS, "metadata.query.check-constraint"),
     FOREIGN_KEY(MetadataCategoryType.FOREIGN_KEYS, "metadata.query.foreign-key"),
     UNIQUE_KEY(MetadataCategoryType.UNIQUE_KEYS, "metadata.query.unique-key"),
-    PRIMARY_KEY(MetadataCategoryType.PRIMARY_KEYS, "metadata.query.primary-key");
+    PRIMARY_KEY(MetadataCategoryType.PRIMARY_KEYS, "metadata.query.primary-key"),
+    CONSTRAINT_COLUMN(MetadataCategoryType.CONSTRAINT_COLUMNS, "metadata.query.constraint-column");
 
     private final MetadataCategoryType categoryType;
     private final String key;

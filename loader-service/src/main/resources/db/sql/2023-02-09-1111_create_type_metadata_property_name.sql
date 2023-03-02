@@ -53,4 +53,8 @@ CREATE TYPE metadata_property_name AS ENUM (
 'r_options',
 'order_column',
 'order_by',
-'nulls');
+'nulls',
+'is_disabled',
+'before_after_instead_of',
+'granularity',
+'trigger_event');

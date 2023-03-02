@@ -61,6 +61,11 @@ INSERT INTO metadata_category_metadata_category (metadata_category_, parent_) VA
 INSERT INTO metadata_category (type, root, vendor) VALUES ('Unique keys', false, 'PostgreSql');
 INSERT INTO metadata_category_metadata_category (metadata_category_, parent_) VALUES ((SELECT metadata_category_ FROM metadata_category WHERE type = 'Unique keys'), (SELECT metadata_category_ FROM metadata_category WHERE type = 'Tables'));
 
+INSERT INTO metadata_category (type, root, vendor) VALUES ('Constraint columns', false, 'PostgreSql');
+INSERT INTO metadata_category_metadata_category (metadata_category_, parent_) VALUES ((SELECT metadata_category_ FROM metadata_category WHERE type = 'Constraint columns'), (SELECT metadata_category_ FROM metadata_category WHERE type = 'Primary keys'));
+INSERT INTO metadata_category_metadata_category (metadata_category_, parent_) VALUES ((SELECT metadata_category_ FROM metadata_category WHERE type = 'Constraint columns'), (SELECT metadata_category_ FROM metadata_category WHERE type = 'Foreign keys'));
+INSERT INTO metadata_category_metadata_category (metadata_category_, parent_) VALUES ((SELECT metadata_category_ FROM metadata_category WHERE type = 'Constraint columns'), (SELECT metadata_category_ FROM metadata_category WHERE type = 'Unique keys'));
+
 INSERT INTO metadata_category (type, root, vendor) VALUES ('Check constraints', false, 'PostgreSql');
 INSERT INTO metadata_category_metadata_category (metadata_category_, parent_) VALUES ((SELECT metadata_category_ FROM metadata_category WHERE type = 'Check constraints'), (SELECT metadata_category_ FROM metadata_category WHERE type = 'Tables'));
 INSERT INTO metadata_category_metadata_category (metadata_category_, parent_) VALUES ((SELECT metadata_category_ FROM metadata_category WHERE type = 'Check constraints'), (SELECT metadata_category_ FROM metadata_category WHERE type = 'User defined types'));

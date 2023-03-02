@@ -6,6 +6,7 @@ CREATE TYPE metadata_type AS ENUM (
     'COLUMN',
     'INDEX',
     'INDEX_COLUMN',
+    'CONSTRAINT_COLUMN',
     'PRIMARY_KEY',
     'UNIQUE_KEY',
     'FOREIGN_KEY',

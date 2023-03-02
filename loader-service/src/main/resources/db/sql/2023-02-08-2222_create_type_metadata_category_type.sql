@@ -15,6 +15,7 @@ CREATE TYPE metadata_category_type AS ENUM(
     'Columns',
     'Indexes',
     'Index columns',
+    'Constraint columns',
     'Triggers',
     'Parameters',
     'Primary keys',

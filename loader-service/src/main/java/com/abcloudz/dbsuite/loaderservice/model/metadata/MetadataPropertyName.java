@@ -61,7 +61,11 @@ public enum MetadataPropertyName {
     R_OPTIONS("r_options"),
     ORDER_COLUMN("order_column"),
     ORDER_BY("order_by"),
-    NULLS("nulls");
+    NULLS("nulls"),
+    IS_DISABLED("is_disabled"),
+    BEFORE_AFTER_INSTEAD_OF("before_after_instead_of"),
+    GRANULARITY("granularity"),
+    TRIGGER_EVENT("trigger_event");
 
     private final String name;
 }

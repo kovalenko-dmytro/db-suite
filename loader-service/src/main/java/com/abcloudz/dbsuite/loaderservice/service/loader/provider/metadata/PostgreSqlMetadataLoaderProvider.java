@@ -30,5 +30,6 @@ public class PostgreSqlMetadataLoaderProvider extends AbstractVendorMetadataLoad
         getMetadataLoaders().put(MetadataCategoryType.COLUMNS, getBeanByName("ColumnPostgreSqlLoader"));
         getMetadataLoaders().put(MetadataCategoryType.INDEXES, getBeanByName("IndexPostgreSqlLoader"));
         getMetadataLoaders().put(MetadataCategoryType.INDEX_COLUMNS, getBeanByName("IndexColumnPostgreSqlLoader"));
+        getMetadataLoaders().put(MetadataCategoryType.TRIGGERS, getBeanByName("TriggerPostgreSqlLoader"));
     }
 }
