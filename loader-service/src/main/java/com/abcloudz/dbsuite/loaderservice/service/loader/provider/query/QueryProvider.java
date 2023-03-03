@@ -5,6 +5,8 @@ import com.abcloudz.dbsuite.loaderservice.dto.loader.LoadContext;
 import com.abcloudz.dbsuite.loaderservice.exception.LoaderServiceApplicationException;
 import com.abcloudz.dbsuite.loaderservice.model.category.VendorType;
 import com.abcloudz.dbsuite.loaderservice.model.databaseclient.DatabaseClient;
+import com.abcloudz.dbsuite.loaderservice.model.metadata.MetadataPropertyName;
+import com.abcloudz.dbsuite.loaderservice.model.metadata.MetadataType;
 import com.abcloudz.dbsuite.loaderservice.model.version.Version;
 import com.abcloudz.dbsuite.loaderservice.service.loader.provider.Provider;
 import lombok.RequiredArgsConstructor;
@@ -47,7 +49,7 @@ public class QueryProvider implements Provider<String, LoadContext> {
 
         Version serverVersion = Objects.isNull(context.getParent())
             ? obtainServerVersion(context.getDatabaseClient(), context.getConnection().getConnectionName(), locale)
-            : context.getParent().getServerVersion();
+            : new Version(context.getParent().extractProperty(MetadataType.SERVER, MetadataPropertyName.VERSION));
         if (serverVersion.compareTo(context.getCategory().getVersionFrom()) < 0) {
             throw new LoaderServiceApplicationException(
                 messageSource.getMessage(Error.CATEGORY_VERSION_UNSUPPORTED.getKey(),

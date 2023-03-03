@@ -55,22 +55,6 @@ public class Metadata {
     @CreationTimestamp
     private LocalDateTime addedAt;
 
-    public Version getServerVersion() {
-        Metadata current = this;
-        while (!current.getType().equals(MetadataType.SERVER)) {
-            current = current.getParent();
-        }
-        return new Version(extractServerVersion(current));
-    }
-
-    private String extractServerVersion(Metadata metadata) {
-        return metadata.properties.stream()
-            .filter(metadataProperty -> metadataProperty.getName().equals(MetadataPropertyName.VERSION))
-            .findFirst()
-            .orElseThrow(IllegalArgumentException::new)
-            .getValue();
-    }
-
     public String extractProperty(MetadataType type, MetadataPropertyName name) {
         Metadata targetMetadata = this;
         while (!targetMetadata.getType().equals(type)) {

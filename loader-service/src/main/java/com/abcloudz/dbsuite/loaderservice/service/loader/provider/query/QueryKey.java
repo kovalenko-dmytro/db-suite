@@ -29,9 +29,9 @@ public enum QueryKey {
     INDEX(MetadataCategoryType.INDEXES, "metadata.query.index"),
     INDEX_COLUMN(MetadataCategoryType.INDEX_COLUMNS, "metadata.query.index-column"),
     CHECK_CONSTRAINT(MetadataCategoryType.CHECK_CONSTRAINTS, "metadata.query.check-constraint"),
-    FOREIGN_KEY(MetadataCategoryType.FOREIGN_KEYS, "metadata.query.foreign-key"),
-    UNIQUE_KEY(MetadataCategoryType.UNIQUE_KEYS, "metadata.query.unique-key"),
-    PRIMARY_KEY(MetadataCategoryType.PRIMARY_KEYS, "metadata.query.primary-key"),
+    FOREIGN_KEY(MetadataCategoryType.FOREIGN_KEYS, "metadata.query.constraint"),
+    UNIQUE_KEY(MetadataCategoryType.UNIQUE_KEYS, "metadata.query.constraint"),
+    PRIMARY_KEY(MetadataCategoryType.PRIMARY_KEYS, "metadata.query.constraint"),
     CONSTRAINT_COLUMN(MetadataCategoryType.CONSTRAINT_COLUMNS, "metadata.query.constraint-column");
 
     private final MetadataCategoryType categoryType;

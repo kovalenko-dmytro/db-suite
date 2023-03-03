@@ -65,7 +65,25 @@ public enum MetadataPropertyName {
     IS_DISABLED("is_disabled"),
     BEFORE_AFTER_INSTEAD_OF("before_after_instead_of"),
     GRANULARITY("granularity"),
-    TRIGGER_EVENT("trigger_event");
+    TRIGGER_EVENT("trigger_event"),
+    REFERENCED_DATABASE("referenced_database"),
+    TABLE_SCHEMA("table_schema"),
+    TABLE_NAME("table_name"),
+    CONSTRAINT_SCHEMA("constraint_schema"),
+    CONSTRAINT_TYPE("constraint_type"),
+    IS_DEFERRABLE("is_deferrable"),
+    IS_INITIALLY_DEFERRED("is_initially_deferred"),
+    CONSTRAINT_TYPE_DESC("constraint_type_desc"),
+    CHECK_CLAUSE("check_clause"),
+    REFERENCED_TABLE_SCHEMA("referenced_table_schema"),
+    REFERENCED_TABLE_NAME("referenced_table_name"),
+    REFERENCED_CONSTRAINT_SCHEMA("referenced_constraint_schema"),
+    REFERENCED_CONSTRAINT_NAME("referenced_constraint_name"),
+    MATCH_OPTION("match_option"),
+    UPDATE_RULE("update_rule"),
+    DELETE_RULE("delete_rule"),
+    POSITION_IN_UNIQUE_CONSTRAINT("position_in_unique_constraint"),
+    COLUMN_IN_UNIQUE_CONSTRAINT("column_in_unique_constraint");
 
     private final String name;
 }
