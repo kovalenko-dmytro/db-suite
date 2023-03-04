@@ -83,7 +83,8 @@ public enum MetadataPropertyName {
     UPDATE_RULE("update_rule"),
     DELETE_RULE("delete_rule"),
     POSITION_IN_UNIQUE_CONSTRAINT("position_in_unique_constraint"),
-    COLUMN_IN_UNIQUE_CONSTRAINT("column_in_unique_constraint");
+    COLUMN_IN_UNIQUE_CONSTRAINT("column_in_unique_constraint"),
+    CONDITION_DEFINITION("condition_definition");
 
     private final String name;
 }

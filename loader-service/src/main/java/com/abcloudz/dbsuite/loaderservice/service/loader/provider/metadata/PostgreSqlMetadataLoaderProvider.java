@@ -35,5 +35,6 @@ public class PostgreSqlMetadataLoaderProvider extends AbstractVendorMetadataLoad
         getMetadataLoaders().put(MetadataCategoryType.FOREIGN_KEYS, getBeanByName("ConstraintPostgreSqlLoader"));
         getMetadataLoaders().put(MetadataCategoryType.UNIQUE_KEYS, getBeanByName("ConstraintPostgreSqlLoader"));
         getMetadataLoaders().put(MetadataCategoryType.CONSTRAINT_COLUMNS, getBeanByName("ConstraintColumnPostgreSqlLoader"));
+        getMetadataLoaders().put(MetadataCategoryType.CHECK_CONSTRAINTS, getBeanByName("CheckConstraintPostgreSqlLoader"));
     }
 }

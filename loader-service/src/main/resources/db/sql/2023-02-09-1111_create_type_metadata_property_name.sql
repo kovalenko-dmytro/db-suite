@@ -75,4 +75,5 @@ CREATE TYPE metadata_property_name AS ENUM (
 'update_rule',
 'delete_rule',
 'position_in_unique_constraint',
-'column_in_unique_constraint');
+'column_in_unique_constraint',
+'condition_definition');
