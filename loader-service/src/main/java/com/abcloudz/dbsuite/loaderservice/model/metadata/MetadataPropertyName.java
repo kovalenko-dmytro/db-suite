@@ -84,7 +84,12 @@ public enum MetadataPropertyName {
     DELETE_RULE("delete_rule"),
     POSITION_IN_UNIQUE_CONSTRAINT("position_in_unique_constraint"),
     COLUMN_IN_UNIQUE_CONSTRAINT("column_in_unique_constraint"),
-    CONDITION_DEFINITION("condition_definition");
+    CONDITION_DEFINITION("condition_definition"),
+    IS_RETURNS("is_returns"),
+    IS_NO_NAME("is_no_name"),
+    PARAMETER_DEFAULT("parameter_default"),
+    ARGUMENT_MODE("argument_mode"),
+    ARGUMENT_ORDER("argument_order");
 
     private final String name;
 }
