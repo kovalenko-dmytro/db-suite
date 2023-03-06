@@ -18,49 +18,45 @@ import java.util.Locale;
 
 @Tag(name = "DB Connection Service REST API")
 @RestController
-@RequestMapping(value = "/api/v1/vendors/{vendorGuid}/connections")
+@RequestMapping(value = "/api/v1/connections")
 @RequiredArgsConstructor
 public class ConnectionController {
 
     private final ConnectionService connectionService;
 
     @GetMapping
-    public ResponseEntity<Page<ConnectionResponseDTO>> find(@PathVariable("vendorGuid") String vendorGuid, Pageable pageable) {
+    public ResponseEntity<Page<ConnectionResponseDTO>> find(@RequestParam(value = "vendorGuid") String vendorGuid,
+                                                            Pageable pageable) {
         return ResponseEntity.ok().body(connectionService.find(vendorGuid, pageable));
     }
 
     @GetMapping(value = "/{connectionGuid}")
-    public ResponseEntity<ConnectionResponseDTO> findByGuid(@PathVariable("vendorGuid") String vendorGuid,
-                                                            @PathVariable("connectionGuid") String connectionGuid,
+    public ResponseEntity<ConnectionResponseDTO> findByGuid(@PathVariable("connectionGuid") String connectionGuid,
                                                             @RequestParam(value = "locale", required = false, defaultValue = "en") Locale locale) {
         return ResponseEntity.ok().body(connectionService.findByGuid(connectionGuid, locale));
     }
 
     @PostMapping
-    public ResponseEntity<ConnectionResponseDTO> create(@PathVariable("vendorGuid") String vendorGuid,
-                                                        @RequestBody @Valid ConnectionCreateRequestDTO request,
+    public ResponseEntity<ConnectionResponseDTO> create(@RequestBody @Valid ConnectionCreateRequestDTO request,
                                                         @RequestParam(value = "locale", required = false, defaultValue = "en") Locale locale) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(connectionService.create(vendorGuid, request, locale));
+        return ResponseEntity.status(HttpStatus.CREATED).body(connectionService.create(request, locale));
     }
 
     @PutMapping(value = "/{connectionGuid}")
-    public ResponseEntity<ConnectionResponseDTO> update(@PathVariable("vendorGuid") String vendorGuid,
-                                                        @PathVariable("connectionGuid") String connectionGuid,
+    public ResponseEntity<ConnectionResponseDTO> update(@PathVariable("connectionGuid") String connectionGuid,
                                                         @RequestBody @Valid ConnectionUpdateRequestDTO request,
                                                         @RequestParam(value = "locale", required = false, defaultValue = "en") Locale locale) {
         return ResponseEntity.ok().body(connectionService.update(connectionGuid, request, locale));
     }
 
-    @GetMapping(value = "/{connectionGuid}/validate")
-    public ResponseEntity<ConnectionVerifyResponseDTO> validate(@PathVariable("vendorGuid") String vendorGuid,
-                                                                @PathVariable("connectionGuid") String connectionGuid,
+    @PostMapping(value = "/{connectionGuid}/validate")
+    public ResponseEntity<ConnectionVerifyResponseDTO> validate(@PathVariable("connectionGuid") String connectionGuid,
                                                                 @RequestParam(value = "locale", required = false, defaultValue = "en") Locale locale) {
         return ResponseEntity.ok().body(connectionService.validate(connectionGuid, locale));
     }
 
     @DeleteMapping(value = "/{connectionGuid}")
-    public ResponseEntity<?> delete(@PathVariable("vendorGuid") String vendorGuid,
-                                    @PathVariable("connectionGuid") String connectionGuid,
+    public ResponseEntity<?> delete(@PathVariable("connectionGuid") String connectionGuid,
                                     @RequestParam(value = "locale", required = false, defaultValue = "en") Locale locale) {
         connectionService.delete(connectionGuid, locale);
         return ResponseEntity.ok().build();

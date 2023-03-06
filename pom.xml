@@ -25,7 +25,7 @@
 		<module>gateway-service</module>
 		<module>user-service</module>
 		<module>vendor-service</module>
-		<module>loader-service</module>
+		<module>metadata-service</module>
 	</modules>
 
 </project>

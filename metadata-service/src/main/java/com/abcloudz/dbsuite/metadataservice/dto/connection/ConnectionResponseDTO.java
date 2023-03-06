@@ -1,35 +1,26 @@
-package com.abcloudz.dbsuite.vendorservice.dto.connection;
+package com.abcloudz.dbsuite.metadataservice.dto.connection;
 
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
-
 @NoArgsConstructor
 @AllArgsConstructor
+@Builder
 @Data
-public class ConnectionCreateRequestDTO {
+public class ConnectionResponseDTO {
 
-    @NotBlank
-    private String vendorGuid;
-    @NotBlank
+    private String connectionGuid;
+    private VendorResponseDTO vendor;
     private String connectionName;
-    @NotBlank
     private String host;
-    @NotBlank
     private String port;
-    @NotBlank
     private String database;
-    @NotBlank
     private String username;
-    @NotBlank
     private String password;
-    @NotNull
     private Boolean verifyServerCertificate;
-    @NotNull
     private Boolean useSSL;
-    @NotNull
     private Boolean requireSSL;
+    private boolean verified;
 }
