@@ -9,6 +9,6 @@ import java.util.Locale;
 public interface MetadataService {
 
     MetadataResponseDTO findByMetadataGuid(String metadataGuid, Locale locale);
-    List<MetadataResponseDTO> load(LoadMetadataRequestDTO request, Locale locale);
+    List<MetadataResponseDTO> load(LoadMetadataRequestDTO request, boolean full, Locale locale);
     void delete(String metadataGuid, Locale locale);
 }

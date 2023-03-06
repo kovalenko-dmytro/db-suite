@@ -3,6 +3,7 @@ package com.abcloudz.dbsuite.metadataservice.service.metadata;
 import com.abcloudz.dbsuite.metadataservice.client.VendorServiceClient;
 import com.abcloudz.dbsuite.metadataservice.common.Entity;
 import com.abcloudz.dbsuite.metadataservice.common.message.Error;
+import com.abcloudz.dbsuite.metadataservice.dto.category.BaseMetadataCategoryResponseDTO;
 import com.abcloudz.dbsuite.metadataservice.dto.connection.ConnectionResponseDTO;
 import com.abcloudz.dbsuite.metadataservice.dto.loader.LoadContext;
 import com.abcloudz.dbsuite.metadataservice.dto.metadata.LoadMetadataRequestDTO;
@@ -21,6 +22,7 @@ import org.springframework.context.MessageSource;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 import java.util.stream.Collectors;
@@ -44,15 +46,25 @@ public class MetadataServiceImpl implements MetadataService {
 
     @Override
     @Transactional(rollbackFor = Exception.class)
-    public List<MetadataResponseDTO> load(LoadMetadataRequestDTO request, Locale locale) {
-        List<Metadata> existingMetadata = metadataRepository
-            .findByConnectionGuidAndCategory_metadataCategoryGuidAndParent_metadataGuid(
-                request.getConnectionGuid(),
-                request.getMetadataCategoryGuid(),
-                request.getParentMetadataGuid());
-        if (!existingMetadata.isEmpty()) {
-            return existingMetadata.stream().map(metadataMapper::toMetadataResponseDTO).collect(Collectors.toList());
+    public List<MetadataResponseDTO> load(LoadMetadataRequestDTO request, boolean full, Locale locale) {
+        List<MetadataResponseDTO> metadata = load(request, locale);
+        if (!full) {
+            return metadata;
         }
+        for (MetadataResponseDTO parentMetadata : metadata) {
+            parentMetadata.setChildren(new ArrayList<>());
+            String parentMetadataGuid = parentMetadata.getMetadataGuid();
+            for (BaseMetadataCategoryResponseDTO category: parentMetadata.getCategory().getSubCategories()) {
+                request.setParentMetadataGuid(parentMetadataGuid);
+                request.setMetadataCategoryGuid(category.getMetadataCategoryGuid());
+                parentMetadata.getChildren().addAll(load(request, true, locale));
+            }
+        }
+        return metadata;
+    }
+
+    @Transactional(rollbackFor = Exception.class)
+    private List<MetadataResponseDTO> load(LoadMetadataRequestDTO request, Locale locale) {
         ConnectionResponseDTO connection = vendorServiceClient
             .findByGuid(request.getVendorGuid(), request.getConnectionGuid(), locale);
         MetadataCategory category = metadataCategoryService
@@ -63,6 +75,12 @@ public class MetadataServiceImpl implements MetadataService {
 
         LoadContext context = LoadContext.builder().connection(connection).category(category).parent(parent).build();
         List<Metadata> metadata = loader.load(context, locale);
+
+       metadataRepository
+            .deleteByConnectionGuidAndCategory_metadataCategoryGuidAndParent_metadataGuid(
+                request.getConnectionGuid(),
+                request.getMetadataCategoryGuid(),
+                request.getParentMetadataGuid());
 
         return metadataRepository.saveAll(metadata).stream()
             .map(metadataMapper::toMetadataResponseDTO)

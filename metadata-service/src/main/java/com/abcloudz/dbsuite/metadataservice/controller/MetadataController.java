@@ -29,10 +29,11 @@ public class MetadataController {
 
     @PostMapping
     public ResponseEntity<List<MetadataResponseDTO>> load(@RequestBody @Valid LoadMetadataRequestDTO request,
+                                                          @RequestParam(value = "full", defaultValue = "false") boolean full,
                                                           @RequestParam(value = "locale", required = false, defaultValue = "en") Locale locale) {
         return ResponseEntity
             .status(HttpStatus.CREATED)
-            .body(metadataService.load(request, locale));
+            .body(metadataService.load(request, full, locale));
     }
 
     @DeleteMapping(value = "/{metadataGuid}")
