@@ -65,8 +65,7 @@ public class MetadataServiceImpl implements MetadataService {
 
     @Transactional(rollbackFor = Exception.class)
     private List<MetadataResponseDTO> load(LoadMetadataRequestDTO request, Locale locale) {
-        ConnectionResponseDTO connection = vendorServiceClient
-            .findByGuid(request.getVendorGuid(), request.getConnectionGuid(), locale);
+        ConnectionResponseDTO connection = vendorServiceClient.findByGuid(request.getConnectionGuid(), locale);
         MetadataCategory category = metadataCategoryService
             .findModelByMetadataCategoryGuid(request.getMetadataCategoryGuid(), locale);
         Metadata parent = category.getType().equals(MetadataCategoryType.SERVERS)

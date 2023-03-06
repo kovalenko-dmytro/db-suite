@@ -12,8 +12,6 @@ import javax.validation.constraints.NotBlank;
 public class LoadMetadataRequestDTO {
 
     @NotBlank
-    String vendorGuid;
-    @NotBlank
     String connectionGuid;
     @NotBlank
     String metadataCategoryGuid;

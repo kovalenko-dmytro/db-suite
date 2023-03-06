@@ -13,6 +13,8 @@ import javax.validation.constraints.NotNull;
 public class ConnectionCreateRequestDTO {
 
     @NotBlank
+    private String vendorGuid;
+    @NotBlank
     private String connectionName;
     @NotBlank
     private String host;

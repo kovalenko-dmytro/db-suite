@@ -49,8 +49,8 @@ public class ConnectionServiceImpl implements ConnectionService {
     }
 
     @Override
-    public ConnectionResponseDTO create(String vendorGuid, ConnectionCreateRequestDTO request, Locale locale) {
-        Vendor vendor = getVendorByGuid(vendorGuid, locale);
+    public ConnectionResponseDTO create(ConnectionCreateRequestDTO request, Locale locale) {
+        Vendor vendor = getVendorByGuid(request.getVendorGuid(), locale);
         Connection connection = Connection.builder()
             .vendor(vendor)
             .connectionName(request.getConnectionName())

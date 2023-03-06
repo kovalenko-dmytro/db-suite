@@ -13,7 +13,7 @@ public interface ConnectionService {
 
     Page<ConnectionResponseDTO> find(String vendorGuid, Pageable pageable);
     ConnectionResponseDTO findByGuid(String connectionGuid, Locale locale);
-    ConnectionResponseDTO create(String vendorGuid, ConnectionCreateRequestDTO request, Locale locale);
+    ConnectionResponseDTO create(ConnectionCreateRequestDTO request, Locale locale);
     ConnectionResponseDTO update(String connectionGuid, ConnectionUpdateRequestDTO request, Locale locale);
     ConnectionVerifyResponseDTO validate(String connectionGuid, Locale locale);
     void delete(String connectionGuid, Locale locale);
