@@ -5,12 +5,12 @@
 	<modelVersion>4.0.0</modelVersion>
 
 	<parent>
-		<groupId>com.abcloudz</groupId>
+		<groupId>com.gmail.apachdima</groupId>
 		<artifactId>db-suite</artifactId>
 		<version>0.0.1-SNAPSHOT</version>
 	</parent>
 
-	<groupId>com.abcloudz.dbsuite</groupId>
+	<groupId>com.gmail.apachdima.dbsuite</groupId>
 	<artifactId>vendor-service</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>vendor-service</name>

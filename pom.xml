@@ -10,7 +10,7 @@
 		<version>2.7.5</version>
 	</parent>
 
-	<groupId>com.abcloudz</groupId>
+	<groupId>com.gmail.apachdima</groupId>
 	<artifactId>db-suite</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>Database Suite Tool</name>
@@ -26,6 +26,7 @@
 		<module>user-service</module>
 		<module>vendor-service</module>
 		<module>metadata-service</module>
-	</modules>
+        <module>compare-service</module>
+    </modules>
 
 </project>
