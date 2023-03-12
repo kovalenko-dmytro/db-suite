@@ -1,5 +1,6 @@
 package com.gmail.apachdima.dbsuite.compareservice.dto.compare;
 
+import com.gmail.apachdima.dbsuite.compareservice.dto.matcher.MatchNode;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -11,6 +12,6 @@ import lombok.NoArgsConstructor;
 @Data
 public class CompareContext {
 
-    private String property;
+    private MatchNode matchNode;
     private String anotherProperty;
 }

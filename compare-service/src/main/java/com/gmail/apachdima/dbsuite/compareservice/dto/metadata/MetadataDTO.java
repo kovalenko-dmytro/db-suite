@@ -13,14 +13,14 @@ import java.util.List;
 @AllArgsConstructor
 @Builder
 @Data
-public class MetadataResponseDTO {
+public class MetadataDTO {
 
     private String metadataGuid;
     private String connectionGuid;
     private String type;
-    private BaseMetadataCategoryResponseDTO category;
-    private List<MetadataPropertyResponseDTO> properties;
+    private MetadataCategoryDTO category;
+    private List<MetadataPropertyDTO> properties;
     private String parent;
-    private List<MetadataResponseDTO> children = new ArrayList<>();
+    private List<MetadataDTO> children = new ArrayList<>();
     private LocalDateTime addedAt;
 }

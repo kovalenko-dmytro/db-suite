@@ -1,4 +1,4 @@
-package com.gmail.apachdima.dbsuite.compareservice.service;
+package com.gmail.apachdima.dbsuite.compareservice.common;
 
 import java.util.Arrays;
 

@@ -1,8 +1,8 @@
 package com.gmail.apachdima.dbsuite.compareservice.service.provider;
 
+import com.gmail.apachdima.dbsuite.compareservice.common.CompareMode;
 import com.gmail.apachdima.dbsuite.compareservice.dto.compare.CompareContext;
 import com.gmail.apachdima.dbsuite.compareservice.dto.compare.CompareResult;
-import com.gmail.apachdima.dbsuite.compareservice.service.CompareMode;
 import com.gmail.apachdima.dbsuite.compareservice.service.comparator.Comparator;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

@@ -5,17 +5,15 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDateTime;
+import java.util.List;
 
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @Data
-public class MetadataPropertyResponseDTO {
+public class MetadataCategoryDTO {
 
-    private String propertyGuid;
-    private String name;
-    private String value;
-    private String metadataGuid;
-    private LocalDateTime addedAt;
+    private String metadataCategoryGuid;
+    private String type;
+    private List<MetadataCategoryDTO> subCategories;
 }
